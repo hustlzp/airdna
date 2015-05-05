@@ -28,40 +28,40 @@ def signin():
 def signup():
     """Signup"""
     form = SignupForm()
-    code_string = request.args.get('code')
-    if code_string:
-        form.code.data = code_string
-        code = InvitationCode.query.filter(InvitationCode.code == code_string).first()
-        if code and code.email:
-            form.email.data = code.email
+    # code_string = request.args.get('code')
+    # if code_string:
+    #     form.code.data = code_string
+    #     code = InvitationCode.query.filter(InvitationCode.code == code_string).first()
+    #     if code and code.email:
+    #         form.email.data = code.email
 
     if form.validate_on_submit():
         user = User(name=form.name.data, email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
 
-        code = InvitationCode.query.filter(InvitationCode.code == form.code.data).first_or_404()
-        code.used = True
-        code.user_id = user.id
-        db.session.add(code)
-        db.session.commit()
+        # code = InvitationCode.query.filter(InvitationCode.code == form.code.data).first_or_404()
+        # code.used = True
+        # code.user_id = user.id
+        # db.session.add(code)
+        # db.session.commit()
 
         # 若用户填写的邮箱和code中的邮箱相同，则无需填写
-        if user.email == code.email:
-            user.is_active = True
-            db.session.add(user)
-            db.session.commit()
-            signin_user(user)
-            flash('注册成功，欢迎来到壹经典。')
-            return redirect(url_for('site.index'))
+        # if user.email == code.email:
+        #     user.is_active = True
+        #     db.session.add(user)
+        #     db.session.commit()
+        #     signin_user(user)
+        #     flash('注册成功，欢迎来到壹经典。')
+        #     return redirect(url_for('site.index'))
+        # else:
+        send_activate_mail(user)
+        email_domain = get_domain_from_email(user.email)
+        if email_domain:
+            message = "请 <a href='%s' target='_blank'>登录邮箱</a> 激活账号" % email_domain
         else:
-            send_activate_mail(user)
-            email_domain = get_domain_from_email(user.email)
-            if email_domain:
-                message = "请 <a href='%s' target='_blank'>登录邮箱</a> 激活账号" % email_domain
-            else:
-                message = "请登录邮箱激活账号"
-            return render_template('site/message.html', title='注册成功', message=message)
+            message = "请登录邮箱激活账号"
+        return render_template('site/message.html', title='注册成功', message=message)
     return render_template('account/signup.html', form=form)
 
 
