@@ -2,22 +2,22 @@
 {% from 'macros/_utils.html' import pagination %}
 {% from "macros/_collection.html" import render_collections %}
 
-{% block page_title %}句集 - 壹经典{% endblock %}
+{% block page_title %}集合 - AirDNA{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="panel panel-primary">
-         <div class="panel-heading">句集</div>
+         <div class="panel-heading">集合</div>
          <div class="panel-body panel-body-no-padding">
-            <div class="collection-kinds-wap">
-               <a href="{{ url_for('site.collections') }}"
-                  class="collection-kind {% if not kind_id %}active{% endif %}">全部</a>
-               {% for kind in collection_kinds %}
-                  <a href="{{ url_for('site.collections', kind_id=kind.id) }}"
-                     class="collection-kind {% if kind_id|int == kind.id %}active{% endif %}">
-                     {{ kind.name }}
-                  </a>
-               {% endfor %}
-            </div>
+            {#            <div class="collection-kinds-wap">#}
+            {#               <a href="{{ url_for('site.collections') }}"#}
+            {#                  class="collection-kind {% if not kind_id %}active{% endif %}">全部</a>#}
+            {#               {% for kind in collection_kinds %}#}
+            {#                  <a href="{{ url_for('site.collections', kind_id=kind.id) }}"#}
+            {#                     class="collection-kind {% if kind_id|int == kind.id %}active{% endif %}">#}
+            {#                     {{ kind.name }}#}
+            {#                  </a>#}
+            {#               {% endfor %}#}
+            {#            </div>#}
 
 
             {{ render_collections(collections.items) }}

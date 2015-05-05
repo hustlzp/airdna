@@ -1,19 +1,18 @@
 {% extends "layout.html" %}
 {% from 'macros/_piece.html' import render_piece_form %}
 
-{% block page_title %}分享句子 - 壹经典{% endblock %}
+{% block page_title %}分享文献 - AirDNA{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="panel panel-primary">
-         <div class="panel-heading">分享句子</div>
+         <div class="panel-heading">分享文献</div>
          <div class="panel-body">
             {{ render_piece_form(form, add=True) }}
          </div>
          <div class="panel-footer">
             <ul>
-               {#               <li>每位用户每天最多分享 2 个句子。</li>#}
-               <li>若为引用，请尽量给出其原作者和出处。</li>
-               <li>句子分享者、管理员、以及分享过 5 个以上获得 5 次顶的句子的用户可参与编辑该句子。</li>
+               {#               <li>每位用户每天最多分享 2 个文献。</li>#}
+               <li>文献分享者、管理员、以及分享过 5 个以上获得 5 次顶的文献的用户可参与编辑该文献。</li>
             </ul>
          </div>
       </div>

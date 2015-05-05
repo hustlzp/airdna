@@ -2,7 +2,7 @@
 {% from "macros/_user.html" import render_user_avatar %}
 {% from 'macros/_utils.html' import pagination %}
 
-{% block page_title %}通知 - 壹经典{% endblock %}
+{% block page_title %}通知 - AirDNA{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="panel panel-primary">
@@ -26,10 +26,10 @@
                   <div class="media-body">
                      {% if notification.kind == NOTIFICATION_KIND.COMMENT_PIECE %}
                         {{ notification.sender.name }}
-                        评论了句子「{{ notification.target|truncate(15, true) }}」
+                        评论了文献「{{ notification.target|truncate(15, true) }}」
                      {% elif notification.kind == NOTIFICATION_KIND.COMMENT_PIECE_COMMENT %}
                         {{ notification.sender.name }}
-                        在句子「{{ notification.target|truncate(15, true) }}」中回复了你
+                        在文献「{{ notification.target|truncate(15, true) }}」中回复了你
                      {% endif %}
                   </div>
                   <span class="created-at">{{ notification.created_at|timesince }}</span>

@@ -76,7 +76,7 @@
             </button>
             <a class="navbar-brand" href="{{ url_for('site.index') }}">
                <img src="{{ static('image/airdna.png') }}" alt=""/>
-               <small>每天分享好句子</small>
+               <small>品读文献，赞美科学</small>
             </a>
          </div>
 
@@ -84,17 +84,8 @@
             <ul class="nav navbar-nav navbar-right">
                <li>
                   <a href="{{ url_for('piece.add') }}" class="need-signed-in">
-                     <span class="fa fa-plus"></span> 分享句子
+                     <span class="fa fa-plus"></span> 分享
                   </a>
-                  {#                  {% if not g.user or permissions.PieceAddPermission().check() %}#}
-                  {#                     <a href="{{ url_for('piece.add') }}" class="need-signed-in">#}
-                  {#                        <span class="fa fa-plus"></span> 分享句子#}
-                  {#                     </a>#}
-                  {#                  {% else %}#}
-                  {#                     <a title="今日已分享 2 个句子" class="disabled">#}
-                  {#                        <span class="fa fa-plus"></span> 分享句子#}
-                  {#                     </a>#}
-                  {#                  {% endif %}#}
                </li>
 
                {#            <li>#}
@@ -108,7 +99,7 @@
                </li>
 
                <li>
-                  <a href="{{ url_for('site.collections') }}">句集</a>
+                  <a href="{{ url_for('site.collections') }}">集合</a>
                </li>
 
                {% if g.user %}
@@ -133,12 +124,12 @@
                            <li><a href="{{ url_for('admin.feedback') }}">意见反馈</a></li>
                            <li>
                               <a href="{{ url_for('admin.piece_log_reports') }}">
-                                 句子恶意编辑
+                                 文献恶意编辑
                               </a>
                            </li>
                            <li>
                               <a href="{{ url_for('admin.collection_log_reports') }}">
-                                 句集恶意编辑
+                                 集合恶意编辑
                               </a>
                            </li>
                         </ul>
@@ -177,8 +168,8 @@
       <ul id='links' class="list-unstyled list-inline">
          <li class="copyright">© 2015</li>
          <li><a href="{{ url_for('site.about') }}">关于</a></li>
-         <li><a href="http://blog.1jingdian.com/" target="_blank">博客</a></li>
-         <li><a href="https://github.com/1jingdian" target="_blank">GitHub</a></li>
+{#         <li><a href="http://blog.1jingdian.com/" target="_blank">博客</a></li>#}
+{#         <li><a href="https://github.com/1jingdian" target="_blank">GitHub</a></li>#}
       </ul>
    </div>
 </div>

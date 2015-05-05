@@ -11,7 +11,7 @@
             </a>
 
             {% if log.kind == COLLECTION_EDIT_KIND.CREATE %}
-               创建了句集
+               创建了集合
             {% elif log.kind == COLLECTION_EDIT_KIND.UPDATE_TITLE %}
                更新了名称
             {% elif log.kind == COLLECTION_EDIT_KIND.ADD_DESC %}
@@ -65,7 +65,7 @@
    <div class="collection-logs-wap">
       <span class="btn-close-collection-logs-wap">×</span>
 
-      <div class="subtitle">句集编辑日志</div>
+      <div class="subtitle">集合编辑日志</div>
 
       {% for log in collection.logs %}
          {{ render_collection_log(log, True) }}
@@ -74,7 +74,7 @@
 
    <script type="text/javascript">
       (function () {
-         // 举报句集修改操作
+         // 举报集合修改操作
          $(document).onOnce('click', '.btn-report-collection-log', function () {
             var id = $(this).data('id');
             var _this = $(this);
@@ -137,12 +137,12 @@
 
             {% if permissions.CollectionEditPermission(collection).check() %}
                <a href="{{ url_for('collection.edit', uid=collection.id) }}"
-                  class="btn-edit-collection" title="编辑句集">
+                  class="btn-edit-collection" title="编辑集合">
                   <span class="fa fa-pencil"></span>
                </a>
             {% endif %}
 
-            <a href="javascript: void(0)" class="btn-show-collection-logs-wap" title="句集编辑日志">
+            <a href="javascript: void(0)" class="btn-show-collection-logs-wap" title="集合编辑日志">
                <span class="fa fa-file-text-o"></span>
             </a>
 
@@ -150,7 +150,7 @@
                <a class="btn-like-collection need-signed-in
                   {% if collection.liked_by_user() %}liked{% endif %}"
                   data-id="{{ collection.id }}" href="javascript: void(0)">
-                  <span class="fa fa-bookmark-o" title="收藏句集"></span>
+                  <span class="fa fa-bookmark-o" title="收藏集合"></span>
                   <span class="fa fa-bookmark" title="取消收藏"></span>
                </a>
             {% endif %}
@@ -174,7 +174,7 @@
 
    <script type="text/javascript">
       (function () {
-         // 收藏句集
+         // 收藏集合
          $('.btn-like-collection').click(function (e) {
             var id = $(this).data('id');
             var url = "";
@@ -202,7 +202,7 @@
             });
          });
 
-         // 弹出句集编辑日志
+         // 弹出集合编辑日志
          $('.btn-show-collection-logs-wap').click(function () {
             $('.collection-logs-wap').show().transition({
                'top': '0',
@@ -210,7 +210,7 @@
             }, 300);
          });
 
-         // 隐藏句集编辑日志
+         // 隐藏集合编辑日志
          $('.btn-close-collection-logs-wap').click(function () {
             $('.collection-logs-wap').transition({
                'top': '15px',
@@ -220,7 +220,7 @@
             });
          });
 
-         // 播放句集
+         // 播放集合
          $('.btn-play-collection').click(function () {
             var id = $(this).data('id');
             var collection = $(this).data('collection');
@@ -289,7 +289,7 @@
                {% if g.user %}
                   <div class="btn-like-collection need-signed-in {% if collection.liked_by_user() %}liked{% endif %}"
                        data-id="{{ collection.id }}">
-                     <span class="fa fa-bookmark-o" title="收藏句集"></span>
+                     <span class="fa fa-bookmark-o" title="收藏集合"></span>
                      <span class="fa fa-bookmark" title="取消收藏"></span>
                   </div>
                {% endif %}
@@ -300,13 +300,13 @@
 
    <script type="text/javascript">
       (function () {
-         // 跳转句集单页
+         // 跳转集合单页
          $('.collection').click(function () {
             var collectionId = $(this).data('collection-id');
             window.location = urlFor('collection.view', {'uid': collectionId});
          });
 
-         // 收藏句集
+         // 收藏集合
          $('.btn-like-collection').click(function (e) {
             var id = $(this).data('id');
             var url = "";

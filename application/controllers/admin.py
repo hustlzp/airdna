@@ -36,7 +36,7 @@ def users():
 @bp.route('/admin/report_piece_logs', methods=['GET', 'POST'])
 @AdminPermission()
 def piece_log_reports():
-    """管理句子恶意编辑举报"""
+    """管理文献恶意编辑举报"""
     reports = PieceEditLogReport.query
     return render_template('admin/piece_log_reports.html', reports=reports)
 
@@ -44,7 +44,7 @@ def piece_log_reports():
 @bp.route('/admin/piece_log_report/<int:uid>/process')
 @AdminPermission()
 def process_piece_log_report(uid):
-    """处理句子恶意编辑举报"""
+    """处理文献恶意编辑举报"""
     report = PieceEditLogReport.query.get_or_404(uid)
     report.processed = True
     db.session.add(report)
@@ -55,7 +55,7 @@ def process_piece_log_report(uid):
 @bp.route('/admin/report_collection_logs', methods=['GET', 'POST'])
 @AdminPermission()
 def collection_log_reports():
-    """管理句集恶意编辑举报"""
+    """管理集合恶意编辑举报"""
     reports = CollectionEditLogReport.query
     return render_template('admin/collection_log_reports.html', reports=reports)
 
@@ -63,7 +63,7 @@ def collection_log_reports():
 @bp.route('/admin/collection_log_report/<int:uid>/process')
 @AdminPermission()
 def process_collection_log_report(uid):
-    """处理句集恶意编辑举报"""
+    """处理集合恶意编辑举报"""
     report = CollectionEditLogReport.query.get_or_404(uid)
     report.processed = True
     db.session.add(report)

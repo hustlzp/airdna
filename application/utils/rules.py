@@ -63,7 +63,7 @@ class PieceAddRule(Rule):
 
 
 class TrustedUserRule(Rule):
-    """受信赖句子：发表过 5 个以上获得 5 次顶的句子的用户。"""
+    """受信赖文献：发表过 5 个以上获得 5 次顶的文献的用户。"""
 
     def base(self):
         return UserRule()

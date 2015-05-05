@@ -41,7 +41,7 @@ $(document).on('mouseleave', '.user-avatar.user-avatar-popover', function () {
     }, 200);
 });
 
-// 顶句子
+// 顶文献
 $(document).on('click', '.vote', function () {
     var pieceId = parseInt($(this).attr('data-piece-id')),
         url = "",

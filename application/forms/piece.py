@@ -9,12 +9,13 @@ from ..models import Piece
 
 
 class PieceForm(Form):
-    content = TextAreaField('句子', validators=[DataRequired('句子不能为空'), trim])
-    original = BooleanField('原创', default=False)
-    author = StringField('原作者', validators=[Optional(), trim], description='选填')
-    source = StringField('出处', validators=[Optional(), trim, remove_book_tilte_mark])
-    source_link = StringField('链接',
-                              validators=[Optional(), trim, check_url, URL(message='链接格式不正确')],
+    content = TextAreaField('文献', validators=[DataRequired('文献标题不能为空'), trim])
+    # original = BooleanField('原创', default=False)
+    author = StringField('第一作者', validators=[DataRequired('第一作者不能为空'), trim], description='')
+    source = StringField('期刊名称',
+                         validators=[DataRequired('期刊名称不能为空'), trim, remove_book_tilte_mark])
+    source_link = StringField('文献链接',
+                              validators=[Optional(), trim, check_url, URL(message='文献链接格式不正确')],
                               description='选填')
     comment = TextAreaField('附言',
                             validators=[Optional(), trim],

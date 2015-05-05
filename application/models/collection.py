@@ -47,11 +47,11 @@ class Collection(db.Model):
 
     @staticmethod
     def get_by_title(title, create_if_not_exist=False):
-        """通过title获取句集，若不存在则创建"""
+        """通过title获取集合，若不存在则创建"""
         title = title or ""
         title = title.strip()
         if title:
-            # 若不存在该title的句集，则创建
+            # 若不存在该title的集合，则创建
             collection = Collection.query.filter(Collection.title == title).first()
             if not collection and create_if_not_exist:
                 collection = Collection(title=title, user_id=g.user.id)

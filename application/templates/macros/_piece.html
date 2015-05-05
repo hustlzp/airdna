@@ -295,17 +295,17 @@
             </a>
 
             {% if log.kind == PIECE_EDIT_KIND.CREATE %}
-               分享了句子
+               分享了文献
             {% elif log.kind == PIECE_EDIT_KIND.ADD_TO_COLLECTION %}
                添加了话题
             {% elif log.kind == PIECE_EDIT_KIND.REMOVE_FROM_COLLECTION %}
                移除了话题
             {% elif log.kind == PIECE_EDIT_KIND.UPDATE_CONTENT %}
-               编辑了句子
+               编辑了文献
             {% elif log.kind == PIECE_EDIT_KIND.CHANGE_TO_ORIGINAL %}
-               将句子设为原创
+               将文献设为原创
             {% elif log.kind == PIECE_EDIT_KIND.CHANGE_TO_NON_ORIGINAL %}
-               将句子设为引用
+               将文献设为引用
             {% elif log.kind == PIECE_EDIT_KIND.ADD_AUTHOR %}
                添加了原作者
             {% elif log.kind == PIECE_EDIT_KIND.UPDATE_AUTHOR %}
@@ -390,7 +390,7 @@
 
 
 {% macro render_piece_logs(piece) %}
-   <div class="subtitle">句子编辑日志</div>
+   <div class="subtitle">文献编辑日志</div>
 
    {% for log in piece.logs %}
       {{ render_piece_log(log, True) }}
@@ -446,7 +446,7 @@
       <div class="actions pull-right">
          {% if permissions.PieceEditPermission(piece).check() %}
             <a href="{{ url_for('piece.edit', uid=piece.id) }}" class="btn-edit-piece"
-               title="编辑句子">
+               title="编辑文献">
                <span class="fa fa-pencil"></span> <span class="btn-text">编辑</span></a>
          {% endif %}
 
@@ -456,7 +456,7 @@
             data-source-string="{{ piece.source_string }}">
             <span class="fa fa-arrows-alt "></span> 全屏</a>
 
-         <a class="btn-show-logs-wap" href="javascript: void(0)" title="句子编辑日志">
+         <a class="btn-show-logs-wap" href="javascript: void(0)" title="文献编辑日志">
             <span class="fa fa-file-text-o"></span> 日志
          </a>
 
@@ -475,16 +475,16 @@
          </span>
 
          {% if g.user %}
-            <a href="javascript: void(0)" class="btn-edit-collection" title="编辑句集">
+            <a href="javascript: void(0)" class="btn-edit-collection" title="编辑集合">
                <span class="fa fa-pencil"></span></a>
             <a href="javascript: void(0)" class="btn-add-collection">
-               <span class="fa fa-plus"></span> 添加句集</a>
+               <span class="fa fa-plus"></span> 添加集合</a>
          {% endif %}
       </div>
 
       <div class="form-group collection-input-wap">
          <input type="text" id="input-collection" class="form-control"
-                placeholder="输入句集，回车确认"/>
+                placeholder="输入集合，回车确认"/>
          <span class="btn-finish-add-collection">完成</span>
       </div>
    </div>
@@ -628,24 +628,24 @@
          // Fix the vertical align bug of .btn-finish-add-collection
          $collectionInput.css('verticalAlign', 'baseline');
 
-         // 通过选择autocomplete菜单项添加句集
+         // 通过选择autocomplete菜单项添加集合
          $collectionInput.on('typeahead:selected', function (e, collection) {
             addToCollection(pieceId, {collection_id: collection.id});
          });
 
-         // 通过回车添加句集
+         // 通过回车添加集合
          $collectionInput.on('keypress', function (e) {
             if (e.which === 13) {
                addToCollection(pieceId, {title: $(this).val()});
             }
          });
 
-         // 进入添加句集模式
+         // 进入添加集合模式
          $('.btn-add-collection, .btn-edit-collection').click(function () {
             enterEditCollectionMode();
          });
 
-         // 删除句集
+         // 删除集合
          $('.collections-container').on('click', '.btn-delete-collection', function () {
             var collectionId = $(this).data('id');
             var _this = $(this);
@@ -662,11 +662,11 @@
             });
          });
 
-         // 完成添加句集
+         // 完成添加集合
          $('.btn-finish-add-collection').click(function () {
             var title = $.trim($('#input-collection').typeahead('val'));
 
-            // 如果此时输入框中有值，则进行句集添加
+            // 如果此时输入框中有值，则进行集合添加
             if (title !== "") {
                addToCollection(pieceId, {title: title});
             }
@@ -674,8 +674,8 @@
          });
 
          /**
-          * 将句子添加到句集
-          * @param {int|string} pieceId - 句子的id
+          * 将文献添加到集合
+          * @param {int|string} pieceId - 文献的id
           * @param {Object} data - Ajax请求的data部分，key为title或collection_id
           */
          function addToCollection(pieceId, data) {
@@ -962,7 +962,7 @@
 {#            <div class="text-center share-piece">#}
 {#               {% if page == 1 %}#}
 {#                  <a href="{{ url_for('piece.add') }}" class="need-signed-in">#}
-{#                     <span class="fa fa-plus"></span> 分享句子#}
+{#                     <span class="fa fa-plus"></span> 分享文献#}
 {#                  </a>#}
 {#               {% else %}#}
 {#                  <span class="text-light">无</span>#}
@@ -998,7 +998,7 @@
 {##}
 {#   <script type="text/javascript">#}
 {#      (function () {#}
-{#         // 显示被隐藏的句子#}
+{#         // 显示被隐藏的文献#}
 {#         $(document).on('click', '.btn-show-hide-pieces', function () {#}
 {#            $(this).parents('.pieces-by-date-wap').first().find('.hide-pieces').show();#}
 {#            $(this).parents('.panel-footer').first().detach();#}
@@ -1019,7 +1019,7 @@
                {#               {% if page == 1 %}#}
                {% if show_modal %}
                   <a href="{{ url_for('piece.add') }}" class="need-signed-in">
-                     <span class="fa fa-plus"></span> 分享句子
+                     <span class="fa fa-plus"></span> 分享文献
                   </a>
                {% else %}
                   <span class="text-light">无</span>
@@ -1056,7 +1056,7 @@
    {% if show_modal %}
       <script type="text/javascript">
          (function () {
-            // 显示被隐藏的句子
+            // 显示被隐藏的文献
             $(document).onOnce('click', '.btn-show-hide-pieces', function () {
                $(this).parents('.pieces-by-date-wap').first().find('.hide-pieces').show();
                $(this).parents('.panel-footer').first().detach();
@@ -1072,38 +1072,38 @@
       {{ form.csrf_token() }}
 
       <div class="form-group">
-         <label for="content">句子</label>
+         <label for="content">文献标题</label>
 
-         <span class="tip">
-            <span class="positive">还可以输入 <span class="content-length"></span> 字</span>
-            <span class="negative">已超出 <span class="content-length"></span> 字</span>
-         </span>
+         {#         <span class="tip">#}
+         {#            <span class="positive">还可以输入 <span class="content-length"></span> 字</span>#}
+         {#            <span class="negative">已超出 <span class="content-length"></span> 字</span>#}
+         {#         </span>#}
 
          <textarea class="form-control" id="content" name="content" placeholder=""
                    rows="5">{{ form.content.data or "" }}</textarea>
          {{ field_error(form.content) }}
       </div>
 
-      {% set original = form.original.data %}
-      <div class="btn-group btn-group-sm btn-group-original clearfix" data-toggle="buttons">
-         <label class="btn btn-default {% if not original %}active{% endif %}">
-            <input type="radio" name="original" value="false" autocomplete="off"
-                   {% if not original %}checked="checked"{% endif %}> 引用
-         </label>
-         <label class="btn btn-default {% if original %}active{% endif %}">
-            <input type="radio" name="original" value="true" autocomplete="off"
-                   {% if original %}checked="checked"{% endif %}> 原创
-         </label>
-      </div>
+      {#      {% set original = form.original.data %}#}
+      {#      <div class="btn-group btn-group-sm btn-group-original clearfix" data-toggle="buttons">#}
+      {#         <label class="btn btn-default {% if not original %}active{% endif %}">#}
+      {#            <input type="radio" name="original" value="false" autocomplete="off"#}
+      {#                   {% if not original %}checked="checked"{% endif %}> 引用#}
+      {#         </label>#}
+      {#         <label class="btn btn-default {% if original %}active{% endif %}">#}
+      {#            <input type="radio" name="original" value="true" autocomplete="off"#}
+      {#                   {% if original %}checked="checked"{% endif %}> 原创#}
+      {#         </label>#}
+      {#      </div>#}
 
       <div class="external">
          {{ vertical_field(form.author) }}
 
          <div class="form-group">
             <label for="source">
-               出处 <span class="fa fa-question-circle source-help"></span>
+               期刊名称 <span class="fa fa-question-circle source-help"></span>
             </label>
-            <input class="form-control" id="source" name="source" placeholder="选填"
+            <input class="form-control" id="source" name="source" placeholder=""
                    type="text" value="{{ form.source.data or "" }}">
             {{ field_error(form.source) }}
          </div>

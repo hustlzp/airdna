@@ -12,7 +12,7 @@ def send_invitation_mail(to, invitation_code):
     """发送内测邀请码到用户邮箱"""
     url = absolute_url_for('account.signup', code=invitation_code)
     return send_mail(to,
-                     "邀请您参与壹经典内测",
+                     "邀请您参与AirDNA内测",
                      render_template('mail/invitation.html', invitation_code=invitation_code,
                                      url=url))
 
@@ -42,7 +42,7 @@ def send_mail(to, subject, html):
         "api_key": config['SC_API_KEY'],
         "to": to,
         "from": config['SC_FROM'],
-        "fromname": '壹经典',
+        "fromname": 'AirDNA',
         "subject": subject,
         "html": html
     }

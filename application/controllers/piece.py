@@ -103,13 +103,13 @@ def add():
         piece.make_qrcode()
         db.session.add(piece)
 
-        # 如果存在title为author的句集，则自动将piece加入到此句集
+        # 如果存在title为author的集合，则自动将piece加入到此集合
         author_collection = Collection.get_by_title(piece.author)
         if author_collection:
             author_collection_piece = CollectionPiece(collection_id=author_collection.id)
             piece.collections.append(author_collection_piece)
 
-        # 如果存在title为source的句集，则自动将piece加入到此句集
+        # 如果存在title为source的集合，则自动将piece加入到此集合
         source_collection = Collection.get_by_title(piece.source)
         if source_collection:
             source_collection_piece = CollectionPiece(collection_id=source_collection.id)
@@ -161,7 +161,7 @@ def edit(uid):
                                         kind=PIECE_EDIT_KIND.CHANGE_TO_ORIGINAL)
             db.session.add(original_log)
 
-        # 仅当句子为引用时，才去记录其他的变更
+        # 仅当文献为引用时，才去记录其他的变更
         if not form.original.data:
             # author变更
             # 此处的 or "" 是为了避免 None != "" 的情况
@@ -214,13 +214,13 @@ def edit(uid):
             piece.source_link = ""
         db.session.add(piece)
 
-        # 如果存在title为author的句集，则自动将piece加入到此句集
+        # 如果存在title为author的集合，则自动将piece加入到此集合
         author_collection = Collection.get_by_title(piece.author)
         if author_collection and not author_collection.has_piece(uid):
             author_collection_piece = CollectionPiece(collection_id=author_collection.id)
             piece.collections.append(author_collection_piece)
 
-        # 如果存在title为source的句集，则自动将piece加入到此句集
+        # 如果存在title为source的集合，则自动将piece加入到此集合
         source_collection = Collection.get_by_title(piece.source)
         if source_collection and not source_collection.has_piece(uid):
             source_collection_piece = CollectionPiece(collection_id=source_collection.id)
@@ -356,7 +356,7 @@ def add_to_collection(uid):
     if not collection:
         abort(400)
 
-    # 若该句集尚未收录此句子，则收录
+    # 若该集合尚未收录此文献，则收录
     collection_piece = CollectionPiece.query.filter(
         CollectionPiece.collection_id == collection.id,
         CollectionPiece.piece_id == uid).first()
@@ -378,7 +378,7 @@ def add_to_collection(uid):
 @bp.route('/piece/<int:uid>/remove_from_collection/<int:collection_id>', methods=['POST'])
 @UserPermission()
 def remove_from_collection(uid, collection_id):
-    """将某句子从某句集中移除"""
+    """将某文献从某集合中移除"""
     piece = Piece.query.get_or_404(uid)
     collection = Collection.query.get_or_404(collection_id)
     collection_pieces = CollectionPiece.query.filter(
