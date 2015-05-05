@@ -8,7 +8,7 @@ body {
   font-family: Georgia, "Xin Gothic", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft YaHei", sans-serif;
 }
 .flash-message {
-  background-color: #1e88a8;
+  background-color: #4a90e2;
   border: 0;
   color: #ffffff;
   margin-bottom: 0;
@@ -29,7 +29,7 @@ body {
 }
 .navbar-nav .notifications-count {
   border-radius: 2px;
-  background-color: #1e88a8;
+  background-color: #4a90e2;
   color: white;
   display: inline-block;
   font-size: 12px;
@@ -68,5 +68,5 @@ body {
   color: #aaa;
 }
 #footer a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }

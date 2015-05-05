@@ -53,8 +53,8 @@
   line-height: 1;
 }
 .piece-modal-wap .btn-close-piece-modal-wap:hover {
-  background-color: #1e88a8;
-  border-color: #1e88a8;
+  background-color: #4a90e2;
+  border-color: #4a90e2;
   color: #ffffff;
 }
 .piece-details-wap .piece-header {
@@ -83,8 +83,8 @@
   border-color: #bbb;
 }
 .piece-details-wap .piece-header .vote.voted {
-  border-color: #1e88a8;
-  color: #1e88a8;
+  border-color: #4a90e2;
+  color: #4a90e2;
 }
 .piece-details-wap .piece-header .vote .votes-count {
   line-height: 1;
@@ -118,7 +118,7 @@
   color: #aaa;
 }
 .piece-details-wap .meta .actions a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .meta .actions .btn-show-logs-wap,
 .piece-details-wap .meta .actions .btn-full-screen,
@@ -191,7 +191,7 @@
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
   font-size: 12px;
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .collections-container .collection-tag-wap .btn-delete-collection:hover {
   background-color: #d0e5f0;
@@ -207,7 +207,7 @@
   border-radius: 30px;
   font-size: 12px;
   text-decoration: none;
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .collections-container .btn-add-collection:hover,
 .piece-details-wap .collections-container .collection-tag:hover {
@@ -222,7 +222,7 @@
   vertical-align: -2px;
 }
 .piece-details-wap .collections-container .btn-edit-collection:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .collections-container .collection-input-wap {
   margin-top: 15px;
@@ -234,7 +234,7 @@
   font-size: 12px;
 }
 .piece-details-wap .collections-container .collection-input-wap .btn-finish-add-collection {
-  color: #1e88a8;
+  color: #4a90e2;
   font-size: 12px;
   margin-left: 10px;
   cursor: pointer;
@@ -257,7 +257,7 @@
   color: #333;
 }
 .piece-details-wap .comment .comment-user a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .comment .comment-user .to-target-user {
   font-size: 12px;
@@ -286,7 +286,7 @@
   color: #bbb;
 }
 .piece-details-wap .comment .comment-meta .options a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .comment .comment-meta .options .btn-vote-comment.voted-by-me,
 .piece-details-wap .comment .comment-meta .options .btn-vote-comment.voted-by-people {
@@ -301,7 +301,7 @@
   display: none;
 }
 .piece-details-wap .comment .comment-meta .options .btn-vote-comment.voted-by-me {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .comment .comment-meta .options .btn-vote-comment .comment-votes-count {
   display: none;
@@ -337,7 +337,7 @@
   cursor: pointer;
 }
 .piece-details-wap .form-sub-comment .btn-cancel-submit-sub-comment:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-details-wap .comment-after-signed-in-wap {
   padding: 12px;
@@ -404,7 +404,7 @@
   color: #999;
 }
 .pieces-by-date-wap .panel-footer .btn-show-hide-pieces:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .pieces-by-date-wap .hide-pieces {
   border-top: 1px solid #e2e2e2;
@@ -540,14 +540,14 @@
   outline: none;
 }
 .pieces-wap .piece .meta .options > a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .pieces-wap .piece .meta .options .collect {
   margin-right: 10px;
 }
 .pieces-wap .piece .meta .options .collect.collected {
   visibility: visible !important;
-  color: #1e88a8 !important;
+  color: #4a90e2 !important;
 }
 .pieces-wap .piece .meta .options .btn-edit-piece {
   margin-right: 10px;
@@ -565,8 +565,8 @@
   border-color: #bbb;
 }
 .pieces-wap .piece .vote.voted {
-  border-color: #1e88a8;
-  color: #1e88a8;
+  border-color: #4a90e2;
+  color: #4a90e2;
 }
 .pieces-wap .piece .vote .votes-count {
   line-height: 1;
@@ -645,7 +645,7 @@
   color: #aaa;
 }
 .source-wap .source-link:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .form-piece .tip {
   font-size: 12px;
@@ -671,12 +671,12 @@
 }
 .form-piece .btn-group-original > label.active {
   box-shadow: none;
-  background-color: #1e88a8;
+  background-color: #4a90e2;
   color: white;
-  border-color: #1e88a8;
+  border-color: #4a90e2;
 }
 .form-piece .btn-group-original > label:last-child:hover {
-  border-left-color: #1e88a8;
+  border-left-color: #4a90e2;
 }
 .form-piece .source-url-wap {
   position: relative;
@@ -719,7 +719,7 @@
   color: #333;
 }
 .piece-log .title a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-log .content {
   margin-bottom: 12px;
@@ -757,7 +757,7 @@
   color: #999;
 }
 .piece-log .log-meta .wap-report-abuse .btn-report-abuse:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .piece-log .log-meta .wap-report-abuse .flag-reported {
   display: none;

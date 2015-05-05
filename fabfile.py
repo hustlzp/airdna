@@ -9,7 +9,7 @@ host_string = config.HOST_STRING
 def deploy():
     """部署"""
     env.host_string = config.HOST_STRING
-    with cd('/var/www/1jingdian'):
+    with cd('/var/www/AirDNA'):
         with shell_env(MODE='PRODUCTION'):
             run('git reset --hard HEAD')
             run('git pull')

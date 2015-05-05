@@ -53,7 +53,7 @@
 }
 .user-profile-header .tab .tab-item.active,
 .user-profile-header .tab .tab-item:hover {
-  background-color: #1e88a8;
+  background-color: #4a90e2;
   color: #ffffff;
 }
 /* 用户卡片 */
@@ -91,7 +91,7 @@
   padding: 0 5px;
 }
 .user-card .meta .count-wap > a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .user-card .meta .count-wap > a .count-quantifier {
   font-size: 12px;

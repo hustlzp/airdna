@@ -18,7 +18,7 @@
   color: #333;
 }
 .collection-log .title a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collection-log .content {
   margin-bottom: 12px;
@@ -53,7 +53,7 @@
   color: #999;
 }
 .collection-log .log-meta .wap-report .btn-report-collection-log:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collection-log .log-meta .wap-report .flag-reported {
   display: none;
@@ -156,13 +156,13 @@
 }
 .collections-wap .collection .btn-like-collection .fa-bookmark {
   display: none;
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collections-wap .collection .btn-like-collection .fa-bookmark-o {
   display: block;
 }
 .collections-wap .collection .btn-like-collection .fa-bookmark-o:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collection-header .collection-info {
   padding: 50px 0 35px 0;
@@ -194,7 +194,7 @@
   color: #999;
 }
 .collection-header .collection-info .options > a:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collection-header .collection-info .options .btn-like-collection.liked {
   visibility: visible;
@@ -207,13 +207,13 @@
 }
 .collection-header .collection-info .options .btn-like-collection .fa-bookmark {
   display: none;
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collection-header .collection-info .options .btn-like-collection .fa-bookmark-o {
   display: inline-block;
 }
 .collection-header .collection-info .options .btn-like-collection .fa-bookmark-o:hover {
-  color: #1e88a8;
+  color: #4a90e2;
 }
 .collection-header .collection-info .options .flag-collection-lock,
 .collection-header .collection-info .options .btn-edit-collection,
@@ -241,6 +241,6 @@
 }
 .collection-header .tab .item.active,
 .collection-header .tab .item:hover {
-  background-color: #1e88a8;
+  background-color: #4a90e2;
   color: #ffffff;
 }
