@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2015 at 12:35 PM
+-- Generation Time: May 05, 2015 at 10:23 AM
 -- Server version: 5.6.15
 -- PHP Version: 5.5.14
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `1jingdian`
+-- Database: `airdna`
 --
 
 -- --------------------------------------------------------
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `collection` (
   PRIMARY KEY (`id`),
   KEY `kind_id` (`kind_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `collection_edit_log` (
   PRIMARY KEY (`id`),
   KEY `collection_id` (`collection_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -97,11 +97,12 @@ CREATE TABLE IF NOT EXISTS `collection_edit_log_report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `collection_edit_log_id` int(11) DEFAULT NULL,
+  `log_id` int(11) DEFAULT NULL,
+  `processed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `collection_edit_log_id` (`collection_edit_log_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  KEY `user_id` (`user_id`),
+  KEY `log_id` (`log_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -113,8 +114,25 @@ CREATE TABLE IF NOT EXISTS `collection_kind` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
+  `show_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `collection_like`
+--
+
+CREATE TABLE IF NOT EXISTS `collection_like` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `collection_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `collection_id` (`collection_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -130,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `collection_piece` (
   PRIMARY KEY (`id`),
   KEY `collection_id` (`collection_id`),
   KEY `piece_id` (`piece_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=109 ;
 
 -- --------------------------------------------------------
 
@@ -162,8 +180,10 @@ CREATE TABLE IF NOT EXISTS `invitation_code` (
   `sended_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `sender_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `sender_id` (`sender_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
@@ -175,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `invitation_code` (
 CREATE TABLE IF NOT EXISTS `mail_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(200) DEFAULT NULL,
-  `message` varchar(200) DEFAULT NULL,
+  `message` text,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -221,9 +241,10 @@ CREATE TABLE IF NOT EXISTS `piece` (
   `source_link` varchar(200) DEFAULT NULL,
   `source_link_title` varchar(200) DEFAULT NULL,
   `qrcode` varchar(200) DEFAULT NULL,
+  `content_length` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 -- --------------------------------------------------------
 
@@ -237,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `piece_author` (
   `count` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -259,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `piece_comment` (
   KEY `user_id` (`user_id`),
   KEY `root_comment_id` (`root_comment_id`),
   KEY `target_user_id` (`target_user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=116 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
 
 -- --------------------------------------------------------
 
@@ -297,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `piece_edit_log` (
   PRIMARY KEY (`id`),
   KEY `piece_id` (`piece_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
 
 -- --------------------------------------------------------
 
@@ -309,11 +330,12 @@ CREATE TABLE IF NOT EXISTS `piece_edit_log_report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `piece_edit_log_id` int(11) DEFAULT NULL,
+  `processed` tinyint(1) DEFAULT NULL,
+  `log_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  KEY `piece_edit_log_id` (`piece_edit_log_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  KEY `log_id` (`log_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -327,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `piece_source` (
   `count` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 -- --------------------------------------------------------
 
@@ -343,7 +365,7 @@ CREATE TABLE IF NOT EXISTS `piece_vote` (
   PRIMARY KEY (`id`),
   KEY `piece_id` (`piece_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
 
 -- --------------------------------------------------------
 
@@ -386,23 +408,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_like_collection`
---
-
-CREATE TABLE IF NOT EXISTS `user_like_collection` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `collection_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `collection_id` (`collection_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Constraints for dumped tables
@@ -418,8 +424,8 @@ ALTER TABLE `click_log`
 -- Constraints for table `collection`
 --
 ALTER TABLE `collection`
-  ADD CONSTRAINT `collection_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `collection_ibfk_1` FOREIGN KEY (`kind_id`) REFERENCES `collection_kind` (`id`);
+  ADD CONSTRAINT `collection_ibfk_1` FOREIGN KEY (`kind_id`) REFERENCES `collection_kind` (`id`),
+  ADD CONSTRAINT `collection_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `collection_edit_log`
@@ -432,8 +438,15 @@ ALTER TABLE `collection_edit_log`
 -- Constraints for table `collection_edit_log_report`
 --
 ALTER TABLE `collection_edit_log_report`
-  ADD CONSTRAINT `collection_edit_log_report_ibfk_1` FOREIGN KEY (`collection_edit_log_id`) REFERENCES `collection_edit_log` (`id`),
-  ADD CONSTRAINT `collection_edit_log_report_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `collection_edit_log_report_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `collection_edit_log_report_ibfk_3` FOREIGN KEY (`log_id`) REFERENCES `collection_edit_log` (`id`);
+
+--
+-- Constraints for table `collection_like`
+--
+ALTER TABLE `collection_like`
+  ADD CONSTRAINT `collection_like_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collection` (`id`),
+  ADD CONSTRAINT `collection_like_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `collection_piece`
@@ -452,7 +465,8 @@ ALTER TABLE `feedback`
 -- Constraints for table `invitation_code`
 --
 ALTER TABLE `invitation_code`
-  ADD CONSTRAINT `invitation_code_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `invitation_code_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `invitation_code_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `notification`
@@ -494,8 +508,8 @@ ALTER TABLE `piece_edit_log`
 -- Constraints for table `piece_edit_log_report`
 --
 ALTER TABLE `piece_edit_log_report`
-  ADD CONSTRAINT `piece_edit_log_report_ibfk_3` FOREIGN KEY (`piece_edit_log_id`) REFERENCES `piece_edit_log` (`id`),
-  ADD CONSTRAINT `piece_edit_log_report_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `piece_edit_log_report_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `piece_edit_log_report_ibfk_3` FOREIGN KEY (`log_id`) REFERENCES `piece_edit_log` (`id`);
 
 --
 -- Constraints for table `piece_vote`
@@ -509,13 +523,6 @@ ALTER TABLE `piece_vote`
 --
 ALTER TABLE `search_log`
   ADD CONSTRAINT `search_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `user_like_collection`
---
-ALTER TABLE `user_like_collection`
-  ADD CONSTRAINT `user_like_collection_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collection` (`id`),
-  ADD CONSTRAINT `user_like_collection_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
