@@ -1100,9 +1100,7 @@
          {{ vertical_field(form.author) }}
 
          <div class="form-group">
-            <label for="source">
-               期刊名称 <span class="fa fa-question-circle source-help"></span>
-            </label>
+            <label for="source">期刊名称</label>
             <input class="form-control" id="source" name="source" placeholder=""
                    type="text" value="{{ form.source.data or "" }}">
             {{ field_error(form.source) }}
@@ -1142,12 +1140,6 @@
          var timerForAuthorTypeahead = null;
          var $sourceInput = $('#source');
          var timerForSourceTypeahead = null;
-
-         $('.source-help').popover({
-            trigger: 'hover',
-            container: 'body',
-            content: '如：书籍、电影、歌曲、文章标题等。'
-         });
 
          // 字数更新
          updateWordCount();
