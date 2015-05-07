@@ -29,13 +29,13 @@
   color: #666;
 }
 .collection-kinds-wap .collection-kind.active {
-  background-color: #4a90e2;
-  border-color: #4a90e2;
+  background-color: #3378ca;
+  border-color: #3378ca;
   color: white;
 }
 .collection-kinds-wap .collection-kind.active:hover {
   color: white;
 }
 .collection-kinds-wap .collection-kind:hover {
-  color: #4a90e2;
+  color: #3378ca;
 }

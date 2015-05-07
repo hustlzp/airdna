@@ -118,15 +118,15 @@ ol li {
 }
 .pagination .active a,
 .pagination .active span {
-  background-color: #4a90e2;
-  border-color: #4a90e2;
+  background-color: #3378ca;
+  border-color: #3378ca;
 }
 .pagination .active a:focus,
 .pagination .active span:focus,
 .pagination .active a:hover,
 .pagination .active span:hover {
-  background-color: #4a90e2;
-  border-color: #4a90e2;
+  background-color: #3378ca;
+  border-color: #3378ca;
 }
 .popover {
   border: 1px solid #ddd;
@@ -173,15 +173,15 @@ ol li {
   padding: 0;
 }
 .panel-primary .panel-heading {
-  background-color: #4a90e2;
+  background-color: #3378ca;
 }
 .btn-primary {
-  background-color: #4a90e2;
+  background-color: #3378ca;
   border: none;
 }
 .btn-primary:focus,
 .btn-primary:hover {
-  background-color: #609de6;
+  background-color: #4685d0;
 }
 .form-group {
   margin-bottom: 20px;
@@ -200,15 +200,15 @@ textarea {
   resize: vertical;
 }
 a {
-  color: #4a90e2;
+  color: #3378ca;
 }
 a:hover,
 a:focus {
   text-decoration: none;
-  color: #3483de;
+  color: #2e6cb6;
 }
 .modal-header {
-  background-color: #4a90e2;
+  background-color: #3378ca;
   color: #fff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
