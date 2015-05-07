@@ -35,8 +35,8 @@ class SigninForm(Form):
 
 class SignupForm(Form):
     """Form for signin"""
-    code = StringField('邀请码',
-                       validators=[DataRequired('邀请码不能为空')])
+    # code = StringField('邀请码',
+    #                    validators=[DataRequired('邀请码不能为空')])
 
     name = StringField('用户名',
                        validators=[DataRequired('用户名不能为空')])
