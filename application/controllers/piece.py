@@ -70,7 +70,7 @@ def add():
     if form.validate_on_submit():
         comment = form.comment.data.strip()
 
-        form.original.data = request.form.get('original') == 'true'
+        # form.original.data = request.form.get('original') == 'true'
         params = form.data.copy()
         params.pop('comment')
         piece = Piece(**params)
