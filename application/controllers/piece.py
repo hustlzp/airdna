@@ -354,7 +354,7 @@ def add_to_collection(uid):
         collection = Collection.query.get_or_404(collection_id)
 
     if not collection:
-        abort(400)
+        abort(404)
 
     # 若该集合尚未收录此文献，则收录
     collection_piece = CollectionPiece.query.filter(
