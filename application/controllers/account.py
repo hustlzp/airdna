@@ -52,7 +52,7 @@ def signup():
         #     db.session.add(user)
         #     db.session.commit()
         #     signin_user(user)
-        #     flash('注册成功，欢迎来到壹经典。')
+        #     flash('注册成功，欢迎来到 AirDNA。')
         #     return redirect(url_for('site.index'))
         # else:
         send_activate_mail(user)
@@ -84,7 +84,7 @@ def activate():
     db.session.add(user)
     db.session.commit()
     signin_user(user)
-    flash('账号激活成功，欢迎来到壹经典。')
+    flash('账号激活成功，欢迎来到 AirDNA。')
     return redirect(url_for('site.index'))
 
 
