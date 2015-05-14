@@ -132,7 +132,6 @@ def edit(uid):
         permission = PieceEditPermission(piece)
         if not permission.check():
             return permission.deny()
-        form.original.data = request.form.get('original') == 'true'
 
         # 单独存储source和author
         source = form.source.data
@@ -150,56 +149,43 @@ def edit(uid):
                                        kind=PIECE_EDIT_KIND.UPDATE_CONTENT)
             db.session.add(content_log)
 
-        # original变更记录：原创->引用
-        if piece.original and not form.original.data:
-            original_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
-                                        kind=PIECE_EDIT_KIND.CHANGE_TO_NON_ORIGINAL)
-            db.session.add(original_log)
-        # original变更记录：引用->原创
-        elif not piece.original and form.original.data:
-            original_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
-                                        kind=PIECE_EDIT_KIND.CHANGE_TO_ORIGINAL)
-            db.session.add(original_log)
+        # author变更
+        # 此处的 or "" 是为了避免 None != "" 的情况
+        if (piece.author or "") != form.author.data:
+            author_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
+                                      before=piece.author, after=form.author.data)
+            if piece.author == "":
+                author_log.kind = PIECE_EDIT_KIND.ADD_AUTHOR
+            elif form.author.data == "":
+                author_log.kind = PIECE_EDIT_KIND.REMOVE_AUTHOR
+            else:
+                author_log.kind = PIECE_EDIT_KIND.UPDATE_AUTHOR
+            db.session.add(author_log)
 
-        # 仅当文献为引用时，才去记录其他的变更
-        if not form.original.data:
-            # author变更
-            # 此处的 or "" 是为了避免 None != "" 的情况
-            if (piece.author or "") != form.author.data:
-                author_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
-                                          before=piece.author, after=form.author.data)
-                if piece.author == "":
-                    author_log.kind = PIECE_EDIT_KIND.ADD_AUTHOR
-                elif form.author.data == "":
-                    author_log.kind = PIECE_EDIT_KIND.REMOVE_AUTHOR
-                else:
-                    author_log.kind = PIECE_EDIT_KIND.UPDATE_AUTHOR
-                db.session.add(author_log)
+        # source变更
+        if (piece.source or "") != form.source.data:
+            source_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
+                                      before=piece.source, after=form.source.data)
+            if piece.source == "":
+                source_log.kind = PIECE_EDIT_KIND.ADD_SOURCE
+            elif form.source.data == "":
+                source_log.kind = PIECE_EDIT_KIND.REMOVE_SOURCE
+            else:
+                source_log.kind = PIECE_EDIT_KIND.UPDATE_SOURCE
+            db.session.add(source_log)
 
-            # source变更
-            if (piece.source or "") != form.source.data:
-                source_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
-                                          before=piece.source, after=form.source.data)
-                if piece.source == "":
-                    source_log.kind = PIECE_EDIT_KIND.ADD_SOURCE
-                elif form.source.data == "":
-                    source_log.kind = PIECE_EDIT_KIND.REMOVE_SOURCE
-                else:
-                    source_log.kind = PIECE_EDIT_KIND.UPDATE_SOURCE
-                db.session.add(source_log)
-
-            # source_link变更
-            if (piece.source_link or "") != form.source_link.data:
-                source_link_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
-                                               before=piece.source_link,
-                                               after=form.source_link.data)
-                if piece.source_link == "":
-                    source_link_log.kind = PIECE_EDIT_KIND.ADD_SOURCE_LINK
-                elif form.source_link.data == "":
-                    source_link_log.kind = PIECE_EDIT_KIND.REMOVE_SOURCE_LINK
-                else:
-                    source_link_log.kind = PIECE_EDIT_KIND.UPDATE_SOURCE_LINK
-                db.session.add(source_link_log)
+        # source_link变更
+        if (piece.source_link or "") != form.source_link.data:
+            source_link_log = PieceEditLog(piece_id=uid, user_id=g.user.id,
+                                           before=piece.source_link,
+                                           after=form.source_link.data)
+            if piece.source_link == "":
+                source_link_log.kind = PIECE_EDIT_KIND.ADD_SOURCE_LINK
+            elif form.source_link.data == "":
+                source_link_log.kind = PIECE_EDIT_KIND.REMOVE_SOURCE_LINK
+            else:
+                source_link_log.kind = PIECE_EDIT_KIND.UPDATE_SOURCE_LINK
+            db.session.add(source_link_log)
 
         # 存储source和author
         if form.source.data and form.source.data != piece.source:
@@ -208,10 +194,6 @@ def edit(uid):
             _save_piece_author(form.author.data)
 
         form.populate_obj(piece)
-        if piece.original:
-            piece.author = ""
-            piece.source = ""
-            piece.source_link = ""
         db.session.add(piece)
 
         # 如果存在title为author的集合，则自动将piece加入到此集合
