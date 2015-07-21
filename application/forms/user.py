@@ -2,11 +2,18 @@
 from flask import g
 from flask_wtf import Form
 from wtforms import StringField, PasswordField
-from wtforms.validators import Optional, URL, DataRequired, EqualTo
+from wtforms.validators import Optional, URL, DataRequired, EqualTo, Email
 
 
 class SettingsForm(Form):
     motto = StringField('座右铭')
+    introduction = StringField('自我介绍（一句话）')
+    research_areas = StringField('研究领域')
+    education = StringField('学历')
+    school = StringField('学校/研究机构')
+    city = StringField('城市')
+    laboratory_site = StringField('实验室网站', validators=[Optional(), URL(message='链接格式不正确')])
+    public_mailbox = StringField('公开邮箱', validators=[Optional(), Email(message='邮箱格式不正确')])
     blog = StringField('博客', validators=[Optional(), URL(message='链接格式不正确')])
     weibo = StringField('微博', validators=[Optional(), URL(message='链接格式不正确')])
     douban = StringField('豆瓣', validators=[Optional(), URL(message='链接格式不正确')])

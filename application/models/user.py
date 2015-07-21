@@ -20,6 +20,15 @@ class User(db.Model):
     pieces_count = db.Column(db.Integer, default=0)
     liked_collections_count = db.Column(db.Integer, default=0)
 
+    # 个人信息
+    introduction = db.Column(db.String(200))
+    research_areas = db.Column(db.String(200))
+    education = db.Column(db.String(200))
+    school = db.Column(db.String(200))
+    city = db.Column(db.String(200))
+    laboratory_site = db.Column(db.String(200))
+    public_mailbox = db.Column(db.String(200))
+
     # 社交媒体
     weibo = db.Column(db.String(100))
     zhihu = db.Column(db.String(100))
