@@ -1098,6 +1098,17 @@
 
       <div class="external">
          {{ vertical_field(form.author) }}
+        {% if add %}
+         <div class="form-group">
+            <label for="source">我参与了发表</label>
+            {% for subfield in form.published %}
+            <tr>
+                <td>{{ subfield }}</td>
+                <td>{{ subfield.label }}</td>
+            </tr>
+            {% endfor %}
+         </div>
+         {% endif %}
 
          <div class="form-group">
             <label for="source">期刊名称</label>

@@ -89,6 +89,10 @@ def add():
         if piece.author:
             _save_piece_author(piece.author)
 
+        #记录发表的次数
+        if piece.published:
+            g.user.published_count += 1
+
         # 自动vote
         vote = PieceVote(piece_id=piece.id, user_id=g.user.id)
         db.session.add(vote)

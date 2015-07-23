@@ -28,6 +28,7 @@ class Piece(db.Model):
     user = db.relationship('User', backref=db.backref('pieces',
                                                       lazy='dynamic',
                                                       order_by='desc(Piece.created_at)'))
+    published = db.Column(db.Boolean, default=False)
 
     def __setattr__(self, name, value):
         # Hash password when set it.

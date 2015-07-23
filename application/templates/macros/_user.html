@@ -78,6 +78,10 @@
             href="{{ url_for('user.share', uid=user.id) }}">
             {{ user.pieces_count }} 分享
          </a>
+         <a class="tab-item {% if active == "published" %}active{% endif %}"
+            href="{{ url_for('user.published', uid=user.id) }}">
+            {{ user.published_count }} 发表
+         </a>
          <a class="tab-item {% if active == "likes" %}active{% endif %}"
             href="{{ url_for('user.likes', uid=user.id) }}">
             {{ user.liked_collections_count }} 收藏

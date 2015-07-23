@@ -24,6 +24,12 @@ def share(uid, page):
     pieces = user.pieces.paginate(page, 20)
     return render_template('user/share.html', user=user, pieces=pieces)
 
+@bp.route('/people/<int:uid>/published', defaults={'page': 1})
+@bp.route('/people/<int:uid>/published/page/<int:page>')
+def published(uid, page):
+    user = User.query.get_or_404(uid)
+    pieces = user.pieces.filter_by(published = True).paginate(page, 20)
+    return render_template('user/published.html', user=user, pieces=pieces)
 
 @bp.route('/people/<int:uid>/likes', defaults={'page': 1})
 @bp.route('/people/<int:uid>/likes/page/<int:page>')

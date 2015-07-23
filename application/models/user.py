@@ -18,6 +18,7 @@ class User(db.Model):
 
     votes_count = db.Column(db.Integer, default=0)
     pieces_count = db.Column(db.Integer, default=0)
+    published_count = db.Column(db.Integer, default=0)
     liked_collections_count = db.Column(db.Integer, default=0)
 
     # 个人信息
