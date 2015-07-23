@@ -27,7 +27,6 @@ sys.setdefaultencoding('utf8')
 def create_app():
     """Create Flask app."""
     app = Flask(__name__)
-
     config = load_config()
     app.config.from_object(config)
 
@@ -55,6 +54,7 @@ def create_app():
         })
 
     # Register components
+    create_cache(app)
     register_db(app)
     register_routes(app)
     register_jinja(app)
@@ -65,6 +65,10 @@ def create_app():
 
     return app
 
+
+def create_cache(app):
+    from .utils import cache
+    cache.cache = cache.init_cache(app)
 
 def register_jinja(app):
     """Register jinja filters, vars, functions."""

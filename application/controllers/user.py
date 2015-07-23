@@ -24,6 +24,12 @@ def share(uid, page):
     pieces = user.pieces.paginate(page, 20)
     return render_template('user/share.html', user=user, pieces=pieces)
 
+@bp.route('/people/<int:uid>/published', defaults={'page': 1})
+@bp.route('/people/<int:uid>/published/page/<int:page>')
+def published(uid, page):
+    user = User.query.get_or_404(uid)
+    pieces = user.pieces.filter_by(published = True).paginate(page, 20)
+    return render_template('user/published.html', user=user, pieces=pieces)
 
 @bp.route('/people/<int:uid>/likes', defaults={'page': 1})
 @bp.route('/people/<int:uid>/likes/page/<int:page>')
@@ -31,6 +37,15 @@ def likes(uid, page):
     user = User.query.get_or_404(uid)
     collections = user.liked_collections.paginate(page, 20)
     return render_template('user/collections.html', user=user, collections=collections)
+
+
+@bp.route('/my/online', methods=['POST'])
+@UserPermission()
+def online():
+    """在线设置"""
+    g.user.online = True
+    
+    return "You Are Online"
 
 
 @bp.route('/my/settings', methods=['GET', 'POST'])

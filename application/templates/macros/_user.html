@@ -44,6 +44,11 @@
          {% if user.motto %}
             <div class="motto">{{ user.motto }}</div>
          {% endif %}
+         {% if user.online %}
+            <div class="online">我在线</div>
+          {% else %}
+            <div class="online">我不在线</div>
+         {% endif %}
 
          <div class="media-icons">
             {% if user.blog %}
@@ -77,6 +82,10 @@
          <a class="tab-item {% if active == "share" %}active{% endif %}"
             href="{{ url_for('user.share', uid=user.id) }}">
             {{ user.pieces_count }} 分享
+         </a>
+         <a class="tab-item {% if active == "published" %}active{% endif %}"
+            href="{{ url_for('user.published', uid=user.id) }}">
+            {{ user.published_count }} 发表
          </a>
          <a class="tab-item {% if active == "likes" %}active{% endif %}"
             href="{{ url_for('user.likes', uid=user.id) }}">

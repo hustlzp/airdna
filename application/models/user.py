@@ -3,6 +3,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from ._base import db
 from ..utils.uploadsets import avatars
+from ..utils import cache
 
 
 class User(db.Model):
@@ -18,6 +19,7 @@ class User(db.Model):
 
     votes_count = db.Column(db.Integer, default=0)
     pieces_count = db.Column(db.Integer, default=0)
+    published_count = db.Column(db.Integer, default=0)
     liked_collections_count = db.Column(db.Integer, default=0)
 
     # 个人信息
@@ -47,6 +49,16 @@ class User(db.Model):
     @property
     def avatar_url(self):
         return avatars.url(self.avatar)
+
+    @property
+    def online(self):
+        return cache.cache.get("user_online_{}".format(self.id))
+
+    @online.setter
+    def online(self, value):
+        
+        return cache.cache.set("user_online_{}".format(self.id), value, timeout = 60)
+
 
     def __repr__(self):
         return '<User %s>' % self.name
