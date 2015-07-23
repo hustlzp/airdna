@@ -5,6 +5,7 @@ Flask-SQLAlchemy
 flask-debugtoolbar
 Flask-Uploads
 Flask-Migrate
+Flask-Cache
 MySQL-python
 itsdangerous
 permission

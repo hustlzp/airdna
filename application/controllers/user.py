@@ -39,6 +39,15 @@ def likes(uid, page):
     return render_template('user/collections.html', user=user, collections=collections)
 
 
+@bp.route('/my/online', methods=['POST'])
+@UserPermission()
+def online():
+    """在线设置"""
+    g.user.online = True
+    
+    return "You Are Online"
+
+
 @bp.route('/my/settings', methods=['GET', 'POST'])
 @UserPermission()
 def settings():

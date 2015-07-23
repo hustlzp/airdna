@@ -44,6 +44,11 @@
          {% if user.motto %}
             <div class="motto">{{ user.motto }}</div>
          {% endif %}
+         {% if user.online %}
+            <div class="online">我在线</div>
+          {% else %}
+            <div class="online">我不在线</div>
+         {% endif %}
 
          <div class="media-icons">
             {% if user.blog %}

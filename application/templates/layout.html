@@ -176,7 +176,14 @@
 
 {# Inject vars on g for single page #}
 {% block page_vars %}{% endblock %}
-
+{# 每隔60s发送一次在线状态 #}
+{% if g.user %}
+<script type="text/javascript">
+setInterval(function(){
+    $.ajax({url: "http://127.0.0.1:5000/my/online", method: 'post'});
+        }, 60*1000);
+</script>
+{% endif %}
 {{ page_js(self) }}
 </body>
 </html>
