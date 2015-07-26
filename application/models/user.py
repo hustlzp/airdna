@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from ._base import db
 from ..utils.uploadsets import avatars
 from ..utils import cache
+from ..models import Follow
 
 
 class User(db.Model):
@@ -45,6 +46,12 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def followed_by(self, user_id):
+        return self.followers.filter(Follow.follower_id == user_id) > 0
+
+    def is_followed(self, user_id):
+        return self.follows.filter(Follow.followed_id == user_id) > 0
 
     @property
     def avatar_url(self):

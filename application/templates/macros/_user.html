@@ -11,7 +11,19 @@
          <div class="user-name">
             {{ user.name }}
          </div>
-
+         {% if g.user %}
+         <div class="user-name">
+           {% if user.followed_by(g.user.id) %}
+            <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
+           {% else %}
+            <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
+           {% endif %}
+         </div>
+        {% else %}
+         <div class="user-name">
+           <a data-userid ="{{ user.id }}" class="" href="/signin">关注我</a>
+         </div>
+        {% endif %}
          <div class="meta clearfix">
             <div class="count-wap votes-count">
                <a href="{{ url_for('user.profile', uid=user.id) }}">
@@ -49,6 +61,19 @@
           {% else %}
             <div class="online">我不在线</div>
          {% endif %}
+         {% if g.user %}
+         <div class="user-name">
+           {% if user.followed_by(g.user.id) %}
+            <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
+           {% else %}
+            <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
+           {% endif %}
+         </div>
+        {% else %}
+         <div class="user-name">
+           <a data-userid ="{{ user.id }}" class="" href="/signin">关注我</a>
+         </div>
+        {% endif %}
 
          <div class="media-icons">
             {% if user.blog %}
