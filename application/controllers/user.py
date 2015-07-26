@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, Blueprint, redirect, request, url_for, flash, g, json, abort
 from ..utils.permissions import UserPermission
 from ..utils.uploadsets import avatars, crop_image, process_image_for_cropping
-from ..models import db, User, Notification
+from ..models import db, User, Notification, Follow
 from ..forms import SettingsForm, ChangePasswordForm
 
 bp = Blueprint('user', __name__)
@@ -47,6 +47,33 @@ def online():
     
     return "You Are Online"
 
+@bp.route('/my/follow/<int:uid>', methods=['POST'])
+@UserPermission()
+def follow(uid):
+    """在线设置"""
+    if uid == g.user.id:
+        return '不能关注本人'
+    user = User.query.get_or_404(uid)
+    if g.user.follows.filter(Follow.followed_id == uid).count() > 0:
+        return '已关注'
+    follow = Follow()
+    follow.follower_id = g.user.id
+    follow.followed_id = user.id;
+    db.session.add(follow)
+    db.session.commit()
+    return "关注成功"
+
+@bp.route('/my/unfollow/<int:uid>', methods=['POST'])
+@UserPermission()
+def unfollow(uid):
+    """在线设置"""
+    followeds = g.user.follows.filter(Follow.followed_id == uid)
+    if followeds.count() == 0:
+        return '未关注'
+    for followed in followeds:
+        db.session.delete(followed)
+    db.session.commit()
+    return "取消关注成功"
 
 @bp.route('/my/settings', methods=['GET', 'POST'])
 @UserPermission()
