@@ -111,6 +111,14 @@
                         {% endif %}
                      </a>
                   </li>
+                  <li>
+                     <a href="{{ url_for('user.messages') }}">
+                        私信
+                        {% if messages_count %}
+                           <span class="notifications-count">{{ messages_count }}</span>
+                        {% endif %}
+                     </a>
+                  </li>
 
                   {% if permissions.AdminPermission().check() %}
                      <li class="dropdown">
