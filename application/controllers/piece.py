@@ -119,6 +119,14 @@ def add():
             source_collection_piece = CollectionPiece(collection_id=source_collection.id)
             piece.collections.append(source_collection_piece)
 
+        # 通知所有关注此用户的人
+        for follower in g.user.followers.all():
+            noti = Notification(sender_id=g.user.id, target=piece.content, content=piece.content[:20],
+                                receiver_id= follower.follower_id, kind=NOTIFICATION_KIND.NEW_BLOG,
+                                link="%s" % (url_for('piece.view', uid=g.user.id)))
+            db.session.add(noti)
+            db.session.commit()
+
         g.user.pieces_count += 1
         db.session.add(g.user)
         db.session.commit()

@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from ._base import db
 from ..utils.uploadsets import avatars
 from ..utils import cache
+from ..models import Follow
 
 
 class User(db.Model):
@@ -46,6 +47,12 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    def followed_by(self, user_id):
+        return self.followers.filter(Follow.follower_id == user_id) > 0
+
+    def is_followed(self, user_id):
+        return self.follows.filter(Follow.followed_id == user_id) > 0
+
     @property
     def avatar_url(self):
         return avatars.url(self.avatar)
@@ -87,3 +94,21 @@ class InvitationCode(db.Model):
                                                 cascade="all, delete, delete-orphan",
                                                 uselist=False),
                              foreign_keys=[sender_id])
+
+class BlackList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User',
+                             backref=db.backref('blocked', lazy='dynamic',
+                                                order_by="desc(BlackList.created_at)",
+                                                cascade="all, delete, delete-orphan"),
+                             foreign_keys=[user_id])
+    blocked_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    blocked_user = db.relationship('User',
+                             backref=db.backref('block', lazy='dynamic',
+                                                order_by="desc(BlackList.created_at)",
+                                                cascade="all, delete, delete-orphan"),
+                             foreign_keys=[blocked_id])
+
+    created_at = db.Column(db.DateTime, default=datetime.now)

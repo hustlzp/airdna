@@ -1,4 +1,6 @@
 from ._base import db
+from .message import *
+from .follow import *
 from .user import *
 from .piece import *
 from .collection import *

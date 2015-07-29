@@ -111,6 +111,14 @@
                         {% endif %}
                      </a>
                   </li>
+                  <li>
+                     <a href="{{ url_for('user.messages') }}">
+                        私信
+                        {% if messages_count %}
+                           <span class="notifications-count">{{ messages_count }}</span>
+                        {% endif %}
+                     </a>
+                  </li>
 
                   {% if permissions.AdminPermission().check() %}
                      <li class="dropdown">
@@ -182,6 +190,70 @@
 setInterval(function(){
     $.ajax({url: "http://127.0.0.1:5000/my/online", method: 'post'});
         }, 60*1000);
+$.ajax({url: "http://127.0.0.1:5000/my/online", method: 'post'});
+$(document).ready(function(){
+        /* 取消关注 */
+        $("body").delegate(".unfollow", 'click', function(e){
+            var userId = $(e.target).attr("data-userid");
+            e.preventDefault();
+            $.ajax({
+                url: "/my/unfollow/" + userId,
+                method: "post",
+                success: function(){
+                    $(".unfollow[data-userid='" + userId + "']").html("关注我").addClass("follow").removeClass("unfollow");
+                },
+                error: function(){
+                    return
+                },
+            });
+        });
+        /* 关注我 */
+        $("body").delegate(".follow", 'click', function(e){
+            var userId = $(e.target).attr("data-userid");
+            e.preventDefault();
+            $.ajax({
+                url: "/my/follow/" + userId,
+                method: "post",
+                success: function(){
+                    $(".follow[data-userid='" + userId + "']").html("取消关注").addClass("unfollow").removeClass("follow");
+                },
+                error: function(){
+                    return
+                },
+            });
+        });
+        /* 取消Block */
+        $("body").delegate(".unblock", 'click', function(e){
+            var userId = $(e.target).attr("data-userid");
+            e.preventDefault();
+            $.ajax({
+                url: "/my/unblock/" + userId,
+                method: "post",
+                success: function(){
+                    $(".unblock[data-userid='" + userId + "']").html("Block").addClass("block").removeClass("unblock");
+                },
+                error: function(){
+                    return
+                },
+            });
+        });
+        /* Block */
+        $("body").delegate(".block", 'click', function(e){
+            var userId = $(e.target).attr("data-userid");
+            e.preventDefault();
+            $.ajax({
+                url: "/my/block/" + userId,
+                method: "post",
+                success: function(){
+                    $(".block[data-userid='" + userId + "']").html("UnBlock").addClass("unblock").removeClass("block");
+                },
+                error: function(){
+                    return
+                },
+            });
+        });
+});
+        
 </script>
 {% endif %}
 {{ page_js(self) }}

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block page_title %}发私信 - AirDNA{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="panel panel-primary">
+          <div class="panel-heading">给<a style='color:aqua;' href='{{ url_for('user.profile', uid= receiver.id )}}'>{{ receiver.name }}</a>发私信</div>
+         <div class="panel-body">
+            <form method="POST" action="{{ url_for('user.send_message', uid = receiver.id) }}" id="form-comment">
+                <input name="_csrf_token" type=hidden value="{{ csrf_token() }}">
+                <input name="uid" type=hidden value="{{ receiver.id }}">
+                <div class="form-group">
+                    <textarea name="content" id="comment-textarea" rows="5" class="form-control"
+                            placeholder="说点什么"></textarea>
+                </div>
+                <div class="submit-wap submit-right">
+                    <button type="submit" class="btn btn-sm btn-comment btn-primary">确定</button>
+                </div>
+            </form>
+         </div>
+      </div>
+   </div>
+
+
+{% endblock %}

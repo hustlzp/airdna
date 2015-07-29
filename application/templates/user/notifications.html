@@ -30,6 +30,9 @@
                      {% elif notification.kind == NOTIFICATION_KIND.COMMENT_PIECE_COMMENT %}
                         {{ notification.sender.name }}
                         在文献「{{ notification.target|truncate(15, true) }}」中回复了你
+                     {% elif notification.kind == NOTIFICATION_KIND.NEW_BLOG %}
+                        {{ notification.sender.name }}
+                        分享了文献「{{ notification.target|truncate(15, true) }}」
                      {% endif %}
                   </div>
                   <span class="created-at">{{ notification.created_at|timesince }}</span>
