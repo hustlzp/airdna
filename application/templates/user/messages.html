@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% from "macros/_user.html" import render_user_avatar %}
+{% from 'macros/_utils.html' import pagination %}
+
+{% block page_title %}私信 - AirDNA{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            {% if not messages_count %}
+               私信
+            {% else %}
+               <span class="only-for-nonzero">{{ messages_count }} </span>条通知
+            {% endif %}
+
+            <span class="fa fa-check btn-check-all" title="全部标记为已读"></span>
+         </div>
+
+         <div class="panel-body">
+            {% for message in messages.items %}
+               <div class="notification media {% if message.checked %}checked{% endif %}"
+                    data-id="{{ message.id }}">
+                  <div class="media-left">
+                     {{ render_user_avatar(message.sender) }}
+                  </div>
+                  <div class="media-body">
+                     {% if message.sender.id == g.user.id %}
+                        我发送给<a href="{{ url_for('user.profile', uid=message.receiver_id)}}">{{ message.receiver.name }}</a>
+                     {% else %}
+                        <a href="{{ url_for('user.profile', uid=message.sender_id)}}">{{ message.sender.name }}</a>发送给我
+                     
+                     {% endif %}
+
+                    <div class="message-content">{{ message.content }}</div>
+                  </div>
+                  <span class="created-at">{{ message.created_at|timesince }}</span>
+                  {% if message.receiver_id == g.user.id %}
+                    <a href="url_for('user.send_message', uid=message.receiver_id)">回复</a>
+                  {% endif %}
+                    <a href="javascript:void(0);" data-id={{ message.id }} class="delete-message">删除</a>
+               </div>
+            {% endfor %}
+         </div>
+
+         {% if messages.pages > 1 %}
+            <div class="panel-footer">
+               {{ pagination(messages) }}
+            </div>
+         {% endif %}
+      </div>
+   </div>
+   <script type="text/javascript">
+    $(".delete-message").on('click', function(e){
+        var id = $(e.target).attr("data-id");
+        $.ajax({
+            url: '/my/message/' + id,
+            method: 'DELETE',
+            success: function(){
+                $("div[data-id='" + id + "']").remove();
+            },
+            error: function(){
+                alert("删除失败");
+            },
+            
+        });
+    });
+    $.ajax({
+        url: "{{url_for('user.check_all_messages')}}",
+        method: 'POST'
+    })
+</script>
+{% endblock %}

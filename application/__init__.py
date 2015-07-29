@@ -74,6 +74,7 @@ def register_jinja(app):
     """Register jinja filters, vars, functions."""
     from .utils import filters, permissions, helpers
     from .models import Notification, NOTIFICATION_KIND, PIECE_EDIT_KIND, COLLECTION_EDIT_KIND
+    from .models import Message
 
     app.jinja_env.filters.update({
         'timesince': filters.timesince,
@@ -84,7 +85,9 @@ def register_jinja(app):
     def inject_vars():
         return dict(
             notifications_count=g.user.notifications.filter(
-                ~Notification.checked).count() if g.user else 0
+                ~Notification.checked).count() if g.user else 0,
+            messages_count = g.user.messages.filter(
+                ~Message.checked).count() if g.user else 0,
         )
 
     def url_for_other_page(page):

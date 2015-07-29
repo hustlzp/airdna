@@ -12,13 +12,16 @@
             {{ user.name }}
          </div>
          {% if g.user %}
+         {% if g.user.id != user.id %}
          <div class="user-name">
            {% if user.followed_by(g.user.id) %}
             <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
            {% else %}
             <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
            {% endif %}
+           <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
          </div>
+         {% endif %}
         {% else %}
          <div class="user-name">
            <a data-userid ="{{ user.id }}" class="" href="/signin">关注我</a>
@@ -62,18 +65,23 @@
             <div class="online">我不在线</div>
          {% endif %}
          {% if g.user %}
-         <div class="user-name">
-           {% if user.followed_by(g.user.id) %}
-            <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
-           {% else %}
-            <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
-           {% endif %}
-         </div>
+          {% if g.user != user %}
+          <div class="user-name">
+            {% if user.followed_by(g.user.id) %}
+              <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
+            {% else %}
+              <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
+            {% endif %}
+          </div>
+          {% endif %}
         {% else %}
-         <div class="user-name">
-           <a data-userid ="{{ user.id }}" class="" href="/signin">关注我</a>
-         </div>
+          <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
         {% endif %}
+        {% if g.user.id != user.id %}
+         <div class="user-name">
+           <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
+         </div>
+         {% endif %}
 
          <div class="media-icons">
             {% if user.blog %}

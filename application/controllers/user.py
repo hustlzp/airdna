@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, Blueprint, redirect, request, url_for, flash, g, json, abort
 from ..utils.permissions import UserPermission
 from ..utils.uploadsets import avatars, crop_image, process_image_for_cropping
-from ..models import db, User, Notification, Follow
+from ..models import db, User, Notification, Follow, Message
 from ..forms import SettingsForm, ChangePasswordForm
 
 bp = Blueprint('user', __name__)
@@ -169,3 +169,59 @@ def check_all_notifications():
         db.session.add(notification)
     db.session.commit()
     return json.dumps({'result': True})
+
+@bp.route('/my/messages', defaults={'page': 1})
+@bp.route('/my/messages/page/<int:page>')
+@UserPermission()
+def messages(page):
+    #messages = g.user.messages.paginate(page, 15)
+    messages = Message.query.filter(((Message.sender_id == g.user.id)\
+            & (Message.sender_deleted == False))\
+            |((Message.receiver_id == g.user.id)\
+            &(Message.receiver_deleted == False)
+            )).order_by("-created_at").paginate(page, 15)
+    return render_template('user/messages.html', messages=messages)
+
+@bp.route('/my/messages/check', methods=['POST'])
+@UserPermission()
+def check_all_messages():
+    notifications = g.user.messages.filter(~Notification.checked)
+    for notification in notifications:
+        notification.checked = True
+        notification.checked_at = datetime.now()
+        db.session.add(notification)
+    db.session.commit()
+    return json.dumps({'result': True})
+
+@bp.route('/people/<int:uid>/message/', methods = ['GET', 'POST'])
+@UserPermission()
+def send_message(uid):
+    """个人设置"""
+    user = User.query.get_or_404(uid)
+    if request.method == "POST":
+        if g.user.id == uid:
+            return redirect(url_for('.messages'))
+        content = request.form.get('content')
+        if not content:
+            flash('内容不可为空')
+            return render_template('user/send_message.html', receiver = user)
+        else:
+            m = Message(sender_id = g.user.id, receiver_id = uid, content = content)
+            db.session.add(m)
+            db.session.commit()
+            flash('发送成功')
+            return redirect(url_for('.messages'))
+    else:
+        return render_template('user/send_message.html', receiver = user)
+
+@bp.route('/my/message/<int:mid>', methods = ['DELETE'])
+@UserPermission()
+def delete_message(mid):
+    message = Message.query.get_or_404(mid)
+    if message.sender_id == g.user.id:
+        message.sender_deleted = True
+    elif message.receiver_id == g.user.id:
+        message.receiver_deleted = True
+    db.session.add(message)
+    db.session.commit()
+    return '删除成功'
