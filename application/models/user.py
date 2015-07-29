@@ -94,3 +94,21 @@ class InvitationCode(db.Model):
                                                 cascade="all, delete, delete-orphan",
                                                 uselist=False),
                              foreign_keys=[sender_id])
+
+class BlackList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User',
+                             backref=db.backref('blocked', lazy='dynamic',
+                                                order_by="desc(BackList.created_at)",
+                                                cascade="all, delete, delete-orphan"),
+                             foreign_keys=[user_id])
+    blocked_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    blocked_user = db.relationship('User',
+                             backref=db.backref('block', lazy='dynamic',
+                                                order_by="desc(BackList.created_at)",
+                                                cascade="all, delete, delete-orphan"),
+                             foreign_keys=[blocked_id])
+
+    created_at = db.Column(db.DateTime, default=datetime.now)

@@ -3,13 +3,6 @@ from datetime import datetime
 from ._base import db
 
 
-class NOTIFICATION_KIND(object):
-    COMMENT_PIECE = 1
-    COMMENT_PIECE_COMMENT = 2
-    COMMENT_FEEDBACK = 3
-    NEW_BLOG = 4
-
-
 class Follow(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
