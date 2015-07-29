@@ -101,13 +101,13 @@ class BlackList(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
                              backref=db.backref('blocked', lazy='dynamic',
-                                                order_by="desc(BackList.created_at)",
+                                                order_by="desc(BlackList.created_at)",
                                                 cascade="all, delete, delete-orphan"),
                              foreign_keys=[user_id])
     blocked_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     blocked_user = db.relationship('User',
                              backref=db.backref('block', lazy='dynamic',
-                                                order_by="desc(BackList.created_at)",
+                                                order_by="desc(BlackList.created_at)",
                                                 cascade="all, delete, delete-orphan"),
                              foreign_keys=[blocked_id])
 

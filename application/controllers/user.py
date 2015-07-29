@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, Blueprint, redirect, request, url_for, flash, g, json, abort
 from ..utils.permissions import UserPermission
 from ..utils.uploadsets import avatars, crop_image, process_image_for_cropping
-from ..models import db, User, Notification, Follow, Message
+from ..models import db, User, Notification, Follow, Message, BlackList
 from ..forms import SettingsForm, ChangePasswordForm
 
 bp = Blueprint('user', __name__)
@@ -74,6 +74,34 @@ def unfollow(uid):
         db.session.delete(followed)
     db.session.commit()
     return "取消关注成功"
+
+@bp.route('/my/block/<int:uid>', methods=['POST'])
+@UserPermission()
+def block(uid):
+    """在线设置"""
+    if uid == g.user.id:
+        return '不能拉黑本人'
+    user = User.query.get_or_404(uid)
+    if g.user.blocked.filter(BlackList.blocked_id == uid).count() > 0:
+        return '已加黑名单'
+    block = BlackList()
+    block.user_id = g.user.id
+    block.blocked_id = user.id;
+    db.session.add(block)
+    db.session.commit()
+    return "拉黑成功"
+
+@bp.route('/my/unblock/<int:uid>', methods=['POST'])
+@UserPermission()
+def unblock(uid):
+    """在线设置"""
+    blockeds = g.user.blocked.filter(BlackList.blocked_id == uid)
+    if blockeds.count() == 0:
+        return '未拉黑'
+    for blocked in blockeds:
+        db.session.delete(blocked)
+    db.session.commit()
+    return "取消拉黑成功"
 
 @bp.route('/my/settings', methods=['GET', 'POST'])
 @UserPermission()
@@ -201,6 +229,9 @@ def send_message(uid):
     if request.method == "POST":
         if g.user.id == uid:
             return redirect(url_for('.messages'))
+        elif user.blocked.filter(BlackList.blocked_id == g.user.id).count() > 0:
+            flash('发送失败')
+            return render_template('user/send_message.html', receiver = user)
         content = request.form.get('content')
         if not content:
             flash('内容不可为空')

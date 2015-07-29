@@ -13,14 +13,17 @@
          </div>
          {% if g.user %}
          {% if g.user.id != user.id %}
-         <div class="user-name">
-           {% if user.followed_by(g.user.id) %}
-            <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
-           {% else %}
-            <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
-           {% endif %}
-           <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
-         </div>
+          <div class="user-name">
+            {% if user.followed_by(g.user.id) %}
+              <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
+            {% else %}
+              <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
+            {% endif %}
+
+          </div>
+          <div class="user-name">
+            <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
+          </div>
          {% endif %}
         {% else %}
          <div class="user-name">
@@ -73,15 +76,20 @@
               <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
             {% endif %}
           </div>
+          <div class="user-name">
+            {% if user.followed_by(g.user.id) %}
+              <a data-userid ="{{ user.id }}" class="block" href="#">Block</a>
+            {% else %}
+              <a data-userid ="{{ user.id }}" class="unblock" href="#">UnBlock</a>
+            {% endif %}
+          </div>
+            <div class="user-name">
+              <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
+            </div>
           {% endif %}
         {% else %}
           <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
         {% endif %}
-        {% if g.user.id != user.id %}
-         <div class="user-name">
-           <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
-         </div>
-         {% endif %}
 
          <div class="media-icons">
             {% if user.blog %}
