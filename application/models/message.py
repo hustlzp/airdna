@@ -2,7 +2,7 @@
 from datetime import datetime
 from ._base import db
 
-class Messsage(db.Model):
+class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, default="")
     checked = db.Column(db.Boolean, nullable=False, default=False)
@@ -12,14 +12,14 @@ class Messsage(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     sender = db.relationship('User',
                              backref=db.backref('sender_messages', lazy='dynamic',
-                                                order_by="desc(Messsage.created_at)",
+                                                order_by="desc(Message.created_at)",
                                                 cascade="all, delete, delete-orphan"),
                              foreign_keys=[sender_id])
     sender_deleted = db.Column(db.Boolean, nullable=False, default=False)
 
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver = db.relationship('User', backref=db.backref('messages', lazy='dynamic',
-                                                          order_by="desc(Messsage.created_at)",
+                                                          order_by="desc(Message.created_at)",
                                                           cascade="all, delete, delete-orphan"),
                                foreign_keys=[receiver_id])
     receiver_deleted = db.Column(db.Boolean, nullable=False, default=False)
