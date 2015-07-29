@@ -15,9 +15,11 @@ class Messsage(db.Model):
                                                 order_by="desc(Messsage.created_at)",
                                                 cascade="all, delete, delete-orphan"),
                              foreign_keys=[sender_id])
+    sender_deleted = db.Column(db.Boolean, nullable=False, default=False)
 
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver = db.relationship('User', backref=db.backref('messages', lazy='dynamic',
                                                           order_by="desc(Messsage.created_at)",
                                                           cascade="all, delete, delete-orphan"),
                                foreign_keys=[receiver_id])
+    receiver_deleted = db.Column(db.Boolean, nullable=False, default=False)
