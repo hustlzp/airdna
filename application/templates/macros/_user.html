@@ -53,67 +53,105 @@
 
 
 {% macro render_user_profile_header(user, active="creates") %}
-   <div class="user-profile-header">
-      <div class="user-info">
-         <img src="{{ user.avatar_url }}" class="user-avatar img-circle" alt=""/>
-
-         <div class="user-name">{{ user.name }}</div>
-
-         {% if user.motto %}
-            <div class="motto">{{ user.motto }}</div>
-         {% endif %}
-         {% if user.online %}
-            <div class="online">我在线</div>
-          {% else %}
-            <div class="online">我不在线</div>
-         {% endif %}
-         {% if g.user %}
-          {% if g.user != user %}
-          <div class="user-name">
-            {% if user.followed_by(g.user.id) %}
-              <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
-            {% else %}
-              <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
-            {% endif %}
-          </div>
-          <div class="user-name">
-            {% if user.followed_by(g.user.id) %}
-              <a data-userid ="{{ user.id }}" class="block" href="#">Block</a>
-            {% else %}
-              <a data-userid ="{{ user.id }}" class="unblock" href="#">UnBlock</a>
-            {% endif %}
-          </div>
-            <div class="user-name">
-              <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
-            </div>
-          {% endif %}
-        {% else %}
-          <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
-        {% endif %}
-
-         <div class="media-icons">
-            {% if user.blog %}
-               <a href="{{ user.blog }}" target="_blank" title="博客">
-                  <img src="{{ static('image/media/blog.png') }}" alt=""/>
-               </a>
-            {% endif %}
-            {% if user.weibo %}
-               <a href="{{ user.weibo }}" target="_blank" title="微博">
-                  <img src="{{ static('image/media/weibo.jpg') }}" alt=""/>
-               </a>
-            {% endif %}
-            {% if user.douban %}
-               <a href="{{ user.douban }}" target="_blank" title="豆瓣">
-                  <img src="{{ static('image/media/douban.png') }}" alt=""/>
-               </a>
-            {% endif %}
-            {#            {% if user.zhihu %}#}
-            {#               <a href="{{ user.zhihu }}" target="_blank" title="知乎">#}
-            {#                  <img src="{{ static('image/media/zhihu.png') }}" alt=""/>#}
-            {#               </a>#}
-            {#            {% endif %}#}
-         </div>
+<style>
+.online{
+  text-align:center;
+  margin-top: 3px;
+}
+</style>
+<div class="user-profile-header">
+  <div class="zm-profile-header">
+    <div class="zm-profile-header-main">
+      <div class="top">
+        <div class="title-section ellipsis">
+          <span class="name">{{ user.name }}</span>，
+          <span class="bio" title="{{ user.introduction }}">{{ user.introduction }}</span>
+        </div>
       </div>
+      <div class="body clearfix">
+        <div style="height:123px; float:left;">
+          <div class="zm-profile-header-avatar-container ">
+            <img class="avatar avatar-l" alt="{{ user.name }}" src="{{ user.avatar_url }}" srcset="{{ user.avatar_url }}">
+          {% if user.online %}
+              <div class="online">我在线</div>
+            {% else %}
+              <div class="online">我不在线</div>
+          {% endif %}
+          </div>
+        </div>
+
+        <div class="zm-profile-header-info">
+          <div class="zm-profile-header-user-describe">
+            <div class="items">
+              <div class="item editable-group" data-name="location">
+                <i class="icon icon-profile-location"></i>
+                  <span class="info-wrap">
+                    <span class="location item" title="{{ user.city }}">{{ user.city }}</span>
+                  </span>
+              </div>
+              <div class="item editable-group " data-name="employment">
+                <i class="icon icon-profile-company"></i>
+                  <span class="info-wrap">
+                  <span class="position item" title="{{ user.research_areas }}">{{ user.research_areas }}</span>
+                  </span>
+              </div>
+              <div class="item editable-group " data-name="employment">
+                <i class="icon icon-profile-company"></i>
+                  <span class="info-wrap">
+                  <span class="position item" title="{{ user.research_areas }}">{{ user.research_areas }}</span>
+                  </span>
+              </div>
+              <div class="item editable-group " data-name="education">
+                <i class="icon icon-profile-education"></i>
+                <span class="info-wrap">
+                  <span class="education item" title="{{ user.school }}">{{ user.school }}</span>
+                  <span class="education-extra item" title="{{ user.education }}">{{ user.education }}</span>
+                </span>
+              </div>
+            </div>
+            <div class="zm-profile-header-description editable-group " data-name="description">
+              <span class="info-wrap fold-wrap fold disable-fold">
+                <span class="description unfold-item">
+                  <span class="content">
+                  </span>
+                </span>
+                <span class="fold-item">
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+    </div>
+
+	<div class="zm-profile-header-operation zg-clear ">
+		<div class="zm-profile-header-op-btns clearfix">
+      {% if g.user %}
+        {% if g.user.id != user.id %}
+          {% if user.followed_by(g.user.id )%}
+            <button style="margin-right:10px;" data-follow="m:button" data-userid="{{ user.id }}" class="zg-btn zg-btn-unfollow zm-rich-follow-btn unfollow">取消关注</button>
+          {% else %}
+            <button style="margin-right:10px;" data-follow="m:button" data-userid="{{ user.id }}" class="zg-btn zg-btn-follow zm-rich-follow-btn follow">关注我</button>
+          {% endif %}
+          {% if g.user.is_block(user.id) %}
+            <button data-follow="m:button" data-userid="{{user.id }}" class="zg-btn zg-btn-unfollow zm-rich-follow-btn block">UnBlock</button>
+          {% else %}
+            <button data-follow="m:button" data-userid="{{user.id }}" class="zg-btn zg-btn-follow zm-rich-follow-btn block">Block</button>
+          {% endif %}
+        {% endif %}
+      {% else %}
+          <button style="margin-right:10px;" data-follow="m:button" data-userid="{{ user.id }}" class="zg-btn zg-btn-follow zm-rich-follow-btn follow">关注我</button>
+          <button data-follow="m:button" data-userid="{{user.id }}" class="zg-btn zg-btn-follow zm-rich-follow-btn block">Block</button>
+      {% endif %}
+      {% if g.user != user.id %}
+        <a href="{{ url_for('user.send_message', uid=user.id)}}" class="zg-btn-white zm-profile-header-pm-btn" id="zm-profile-header-pm-btn"><i class="zg-icon">私信</i></a>
+      {% endif %}
+
+
+</div>
+
+</div>
+  </div>
+</div>
 
       <div class="tab clearfix">
          <a class="tab-item {% if active == "votes" %}active{% endif %}"

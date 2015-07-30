@@ -7,6 +7,7 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <link rel='stylesheet' href='/static/css/user/zhihu.css'>
    {% block meta %}{% endblock %}
    {#   <link rel="Shortcut Icon" href="{{ static('image/favicon.ico') }}">#}
    {#   <link rel="apple-touch-icon-precomposed" sizes="152x152"#}
@@ -200,7 +201,7 @@ $(document).ready(function(){
                 url: "/my/unfollow/" + userId,
                 method: "post",
                 success: function(){
-                    $(".unfollow[data-userid='" + userId + "']").html("关注我").addClass("follow").removeClass("unfollow");
+                    $(".unfollow[data-userid='" + userId + "']").html("关注我").addClass("follow").removeClass("unfollow").removeClass("zg-btn-unfollow").addClass("zg-btn-follow");
                 },
                 error: function(){
                     return
@@ -215,7 +216,7 @@ $(document).ready(function(){
                 url: "/my/follow/" + userId,
                 method: "post",
                 success: function(){
-                    $(".follow[data-userid='" + userId + "']").html("取消关注").addClass("unfollow").removeClass("follow");
+                    $(".follow[data-userid='" + userId + "']").html("取消关注").addClass("unfollow").removeClass("follow").removeClass("zg-btn-follow").addClass("zg-btn-unfollow");
                 },
                 error: function(){
                     return
@@ -230,7 +231,7 @@ $(document).ready(function(){
                 url: "/my/unblock/" + userId,
                 method: "post",
                 success: function(){
-                    $(".unblock[data-userid='" + userId + "']").html("Block").addClass("block").removeClass("unblock");
+                    $(".unblock[data-userid='" + userId + "']").html("Block").addClass("block").removeClass("unblock").removeClass("zg-btn-unfollow").addClass("zg-btn-follow");
                 },
                 error: function(){
                     return
@@ -245,7 +246,7 @@ $(document).ready(function(){
                 url: "/my/block/" + userId,
                 method: "post",
                 success: function(){
-                    $(".block[data-userid='" + userId + "']").html("UnBlock").addClass("unblock").removeClass("block");
+                    $(".block[data-userid='" + userId + "']").html("UnBlock").addClass("unblock").removeClass("block").removeClass("zg-btn-follow").addClass("zg-btn-unfollow");
                 },
                 error: function(){
                     return
