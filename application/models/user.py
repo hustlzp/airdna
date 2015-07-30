@@ -48,10 +48,10 @@ class User(db.Model):
         return check_password_hash(self.password, password)
 
     def followed_by(self, user_id):
-        return self.followers.filter(Follow.follower_id == user_id) > 0
+        return self.followers.filter(Follow.follower_id == user_id).count() > 0
 
     def is_followed(self, user_id):
-        return self.follows.filter(Follow.followed_id == user_id) > 0
+        return self.follows.filter(Follow.followed_id == user_id).count() > 0
 
     @property
     def avatar_url(self):
