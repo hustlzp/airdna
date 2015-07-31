@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, Blueprint, redirect, request, url_for, flash, g, json, abort
 from ..utils.permissions import UserPermission
 from ..utils.uploadsets import avatars, crop_image, process_image_for_cropping
-from ..models import db, User, Notification, Follow, Message, BlackList
+from ..models import db, User, Notification, Follow, Message, BlackList, NOTIFICATION_KIND
 from ..forms import SettingsForm, ChangePasswordForm
 
 bp = Blueprint('user', __name__)
@@ -59,6 +59,11 @@ def follow(uid):
     follow = Follow()
     follow.follower_id = g.user.id
     follow.followed_id = user.id;
+    Notification()
+    noti = Notification(sender_id=g.user.id, target='', content="{0}关注了你".format(g.user.name),
+                        receiver_id= uid, kind=NOTIFICATION_KIND.FOLLOW,
+                        link="%s" % (url_for('.profile', uid=g.user.id)))
+    db.session.add(noti)
     db.session.add(follow)
     db.session.commit()
     return "关注成功"

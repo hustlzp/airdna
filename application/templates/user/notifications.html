@@ -33,6 +33,9 @@
                      {% elif notification.kind == NOTIFICATION_KIND.NEW_BLOG %}
                         {{ notification.sender.name }}
                         分享了文献「{{ notification.target|truncate(15, true) }}」
+                     {% elif notification.kind == NOTIFICATION_KIND.FOLLOW %}
+                     <a href="{{ notification.link }}">{{ notification.sender.name }}</a>
+                        关注了你
                      {% endif %}
                   </div>
                   <span class="created-at">{{ notification.created_at|timesince }}</span>

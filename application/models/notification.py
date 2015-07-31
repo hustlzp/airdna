@@ -8,6 +8,7 @@ class NOTIFICATION_KIND(object):
     COMMENT_PIECE_COMMENT = 2
     COMMENT_FEEDBACK = 3
     NEW_BLOG = 4
+    FOLLOW = 5
 
 
 class Notification(db.Model):
