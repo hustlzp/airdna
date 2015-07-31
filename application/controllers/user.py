@@ -173,6 +173,7 @@ def crop_avatar():
 @UserPermission()
 def notifications(page):
     notifications = g.user.notifications.paginate(page, 15)
+    check_all_notifications()
     return render_template('user/notifications.html', notifications=notifications)
 
 
@@ -198,16 +199,25 @@ def check_all_notifications():
     db.session.commit()
     return json.dumps({'result': True})
 
-@bp.route('/my/messages', defaults={'page': 1})
+@bp.route('/my/messages/', defaults={'page': 1})
+@bp.route('/my/messages/<int:uid>/page/<int:page>', defaults={'page': 1})
 @bp.route('/my/messages/page/<int:page>')
 @UserPermission()
-def messages(page):
-    #messages = g.user.messages.paginate(page, 15)
-    messages = Message.query.filter(((Message.sender_id == g.user.id)\
-            & (Message.sender_deleted == False))\
-            |((Message.receiver_id == g.user.id)\
-            &(Message.receiver_deleted == False)
-            )).order_by("-created_at").paginate(page, 15)
+def messages(page, uid):
+    print page, uid
+    if uid == 0:
+        messages = Message.query.filter(((Message.sender_id == g.user.id)\
+                & (Message.sender_deleted == False))\
+                |((Message.receiver_id == g.user.id)\
+                &(Message.receiver_deleted == False)
+                )).order_by("-created_at").paginate(page, 15)
+    else:
+        messages = Message.query.filter(((Message.sender_id == g.user.id)\
+                & (Message.sender_deleted == False) & (Message.receiver_id == uid))\
+                |((Message.receiver_id == g.user.id)\
+                &(Message.receiver_deleted == False) & (Message.sender_id == uid)
+                )).order_by("-created_at").paginate(page, 15)
+    check_all_messages()
     return render_template('user/messages.html', messages=messages)
 
 @bp.route('/my/messages/check', methods=['POST'])
@@ -241,7 +251,7 @@ def send_message(uid):
             db.session.add(m)
             db.session.commit()
             flash('发送成功')
-            return redirect(url_for('.messages'))
+            return redirect(url_for('.messages', uid=0, page=1))
     else:
         return render_template('user/send_message.html', receiver = user)
 

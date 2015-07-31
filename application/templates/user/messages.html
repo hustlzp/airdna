@@ -35,9 +35,15 @@
                   </div>
                   <span class="created-at">{{ message.created_at|timesince }}</span>
                   {% if message.receiver_id == g.user.id %}
-                  <a href="{{ url_for('user.send_message', uid=message.receiver_id) }}">回复</a>
+                  <a href="{{ url_for('user.send_message', uid=message.sender_id) }}">回复</a>
                   {% endif %}
                     <a href="javascript:void(0);" data-id={{ message.id }} class="delete-message">删除</a>
+                     {% if message.sender.id == g.user.id %}
+                       <a href="{{ url_for('user.messages', uid=message.receiver_id, page=1)}}">只看此人</a>
+                     {% else %}
+                        <a href="{{ url_for('user.messages', uid=message.sender_id, page=1)}}">只看此人</a>
+                     
+                     {% endif %}
                </div>
             {% endfor %}
          </div>

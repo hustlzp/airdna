@@ -8014,7 +8014,7 @@ html.no-touch .zm-profile-section-item:hover .zm-item-top-btn {
 }
 
 .zm-profile-header-info {
-	margin-left: 115px
+	margin-left: 150px
 }
 
 .zm-profile-header-avatar-container {
@@ -8148,7 +8148,7 @@ html.no-touch .zm-profile-header-user-describe a:hover span {
 
 .zm-profile-header-operation {
 	padding: 12px 18px;
-	border-top: 1px dotted #eee
+	border-top: 1px;
 }
 
 .zm-profile-header-info-list {
@@ -19341,9 +19341,4 @@ html.no-touch .carousel:hover .carousel-navigation-btn {
 .openinapp-instruction-page .inner .instructions .step-content {
 	font-size: 12px;
 	color: #666
-}
-
-.online {
-  text-align:center;
-  margin-top:10px;
 }
