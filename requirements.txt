@@ -15,6 +15,7 @@ markdown2
 qrcode
 gunicorn
 requests
+python-memcached
 
 # dev
 fabric
