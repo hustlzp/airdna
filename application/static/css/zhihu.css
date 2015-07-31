@@ -718,9 +718,6 @@ html.no-js img.lazy {
 	margin: 0 0 5px
 }
 
-html body,html input,html textarea,html select,html button {
-	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif
-}
 
 body,input,textarea,select,button {
 	line-height: 1.7;
