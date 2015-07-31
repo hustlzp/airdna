@@ -84,41 +84,39 @@
           <div class="zm-profile-header-user-describe">
             <div class="items">
               <div class="item editable-group" data-name="location">
-                <i class="icon icon-profile-location"></i>
+                <!--<i class="icon icon-profile-location"></i>-->
+                <img class="icon" src="/static/image/media/research_area.png" title="研究领域">
                   <span class="info-wrap">
-                    <span class="location item" title="{{ user.city }}">{{ user.city }}</span>
+                    <span class="location item" title="{{ user.public_mailbox }}">{{ user.research_areas }}</span>
+                  </span>
+              </div>
+              <div class="item editable-group" data-name="location">
+                <img class="icon" src="/static/image/media/research_group.png" title="研究结构">
+                  <span class="info-wrap">
+                    <span class="location item" title="{{ user.public_mailbox }}">{{ user.school }}</span>
                   </span>
               </div>
               <div class="item editable-group " data-name="employment">
-                <i class="icon icon-profile-company"></i>
+                <img class="icon" src="/static/image/media/mailbox.png" title="个人邮箱">
                   <span class="info-wrap">
-                  <span class="position item" title="{{ user.research_areas }}">{{ user.research_areas }}</span>
+                  <span class="position item" title="{{ user.research_areas }}">{{ user.public_mailbox }}</span>
                   </span>
               </div>
               <div class="item editable-group " data-name="employment">
-                <i class="icon icon-profile-company"></i>
+                <img class="icon" src="/static/image/media/homepage.png" title="个人主页">
                   <span class="info-wrap">
-                  <span class="position item" title="{{ user.research_areas }}">{{ user.research_areas }}</span>
+                  <span class="position item" title="{{ user.research_areas }}">{{ user.blog }}</span>
                   </span>
               </div>
               <div class="item editable-group " data-name="education">
-                <i class="icon icon-profile-education"></i>
+                <img class="icon" src="/static/image/media/labpage.png" title="实验室主页">
                 <span class="info-wrap">
-                  <span class="education item" title="{{ user.school }}">{{ user.school }}</span>
-                  <span class="education-extra item" title="{{ user.education }}">{{ user.education }}</span>
+                  <span class="education item" title="{{ user.school }}">{{ user.laboratory_site }}</span>
                 </span>
               </div>
             </div>
-            <div class="zm-profile-header-description editable-group " data-name="description">
-              <span class="info-wrap fold-wrap fold disable-fold">
-                <span class="description unfold-item">
-                  <span class="content">
-                  </span>
-                </span>
-                <span class="fold-item">
-                </span>
-              </span>
-            </div>
+            <!--<div class="zm-profile-header-description editable-group " data-name="description">-->
+            <!--</div>-->
           </div>
         </div>
     </div>
