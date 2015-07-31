@@ -201,7 +201,11 @@ $(document).ready(function(){
                 url: "/my/unfollow/" + userId,
                 method: "post",
                 success: function(){
+                if(e.target.tagName.toLowerCase() == "img"){
+                    $(".unfollow[data-userid='" + userId + "']").html("关注我").addClass("follow").removeClass("unfollow").attr("src", "/static/image/media/follow.png");
+                }else{
                     $(".unfollow[data-userid='" + userId + "']").html("关注我").addClass("follow").removeClass("unfollow").removeClass("zg-btn-unfollow").addClass("zg-btn-follow");
+                    }
                 },
                 error: function(){
                     return
@@ -216,8 +220,12 @@ $(document).ready(function(){
                 url: "/my/follow/" + userId,
                 method: "post",
                 success: function(){
-                    $(".follow[data-userid='" + userId + "']").html("取消关注").addClass("unfollow").removeClass("follow").removeClass("zg-btn-follow").addClass("zg-btn-unfollow");
-                },
+                    if(e.target.tagName.toLowerCase() == "img"){
+                        $(".follow[data-userid='" + userId + "']").html("取消关注").addClass("unfollow").removeClass("follow").attr("src", "/static/image/media/unfollow.png");
+                    }else{
+                        $(".follow[data-userid='" + userId + "']").html("取消关注").addClass("unfollow").removeClass("follow").removeClass("zg-btn-follow").addClass("zg-btn-unfollow");
+                        }
+                    },
                 error: function(){
                     return
                 },

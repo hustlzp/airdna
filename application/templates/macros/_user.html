@@ -15,14 +15,12 @@
          {% if g.user.id != user.id %}
           <div class="user-name">
             {% if user.followed_by(g.user.id) %}
-              <a data-userid ="{{ user.id }}" class="unfollow" href="#">取消关注</a>
+              <img style="width:32px;height:32px;" data-userid="{{ user.id }}" class="unfollow" src="/static/image/media/unfollow.png" title="取消关注">
             {% else %}
-              <a data-userid ="{{ user.id }}" class="follow" href="#">关注我</a>
+                <img style="width:32px;height:32px;" data-userid="{{ user.id }}" class="follow" src="/static/image/media/follow.png" title="关注我">
             {% endif %}
+            <a data-userid="{{ user.id }}" href="{{url_for('user.send_message', uid=user.id)}}"><img style="width:32px;height:32px;" class="" src="/static/image/media/message.png" title="给我发私信"></a>
 
-          </div>
-          <div class="user-name">
-            <a data-userid ="{{ user.id }}" class="" href="{{url_for('user.send_message', uid=user.id)}}">给我发私信</a>
           </div>
          {% endif %}
         {% else %}
@@ -115,8 +113,6 @@
                 </span>
               </div>
             </div>
-            <!--<div class="zm-profile-header-description editable-group " data-name="description">-->
-            <!--</div>-->
           </div>
         </div>
     </div>
@@ -140,7 +136,7 @@
           <button style="margin-right:10px;" data-follow="m:button" data-userid="{{ user.id }}" class="zg-btn zg-btn-follow zm-rich-follow-btn follow">关注我</button>
           <button data-follow="m:button" data-userid="{{user.id }}" class="zg-btn zg-btn-follow zm-rich-follow-btn block">Block</button>
       {% endif %}
-      {% if g.user != user.id %}
+      {% if g.user.id != user.id %}
         <a href="{{ url_for('user.send_message', uid=user.id)}}" class="zg-btn-white zm-profile-header-pm-btn" id="zm-profile-header-pm-btn"><i class="zg-icon">私信</i></a>
       {% endif %}
 

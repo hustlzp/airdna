@@ -103,3 +103,9 @@
 .user-avatar-link .user-avatar-popover {
   cursor: pointer;
 }
+.follow{
+  cursor:pointer;
+}
+.unfollow{
+  cursor:pointer;
+}
