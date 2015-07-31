@@ -70,10 +70,14 @@
         <div style="height:123px; float:left;">
           <div class="zm-profile-header-avatar-container ">
             <img class="avatar avatar-l" alt="{{ user.name }}" src="{{ user.avatar_url }}" srcset="{{ user.avatar_url }}">
-          {% if user.online %}
-              <div class="online">我在线</div>
+            {% if g.user and g.user.id == user.id %}
+                <div class="online">我在线</div>
             {% else %}
-              <div class="online">我不在线</div>
+            {% if user.online %}
+                <div class="online">我在线</div>
+              {% else %}
+                <div class="offline">我不在线</div>
+            {% endif %}
           {% endif %}
           </div>
         </div>

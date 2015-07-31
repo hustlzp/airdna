@@ -113,7 +113,7 @@
                      </a>
                   </li>
                   <li>
-                     <a href="{{ url_for('user.messages') }}">
+                  <a href="{{ url_for('user.messages', uid=0, page=1)}}">
                         私信
                         {% if messages_count %}
                            <span class="notifications-count">{{ messages_count }}</span>

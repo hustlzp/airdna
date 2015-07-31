@@ -109,3 +109,19 @@
 .unfollow{
   cursor:pointer;
 }
+.online{
+  background-color: aqua;
+  color: black;
+  width: 60px;
+  text-align: center;
+  margin-top: 3px;
+  margin-left: 20px;
+}
+.offline{
+  background-color: pink;
+  color: white;
+  width: 60px;
+  text-align: center;
+  margin-top: 3px;
+  margin-left: 20px;
+}

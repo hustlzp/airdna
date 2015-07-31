@@ -173,6 +173,7 @@ def crop_avatar():
 @UserPermission()
 def notifications(page):
     notifications = g.user.notifications.paginate(page, 15)
+    check_all_notifications()
     return render_template('user/notifications.html', notifications=notifications)
 
 
@@ -216,6 +217,7 @@ def messages(page, uid):
                 |((Message.receiver_id == g.user.id)\
                 &(Message.receiver_deleted == False) & (Message.sender_id == uid)
                 )).order_by("-created_at").paginate(page, 15)
+    check_all_messages()
     return render_template('user/messages.html', messages=messages)
 
 @bp.route('/my/messages/check', methods=['POST'])
@@ -249,7 +251,7 @@ def send_message(uid):
             db.session.add(m)
             db.session.commit()
             flash('发送成功')
-            return redirect(url_for('.messages'))
+            return redirect(url_for('.messages', uid=0, page=1))
     else:
         return render_template('user/send_message.html', receiver = user)
 
