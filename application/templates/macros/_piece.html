@@ -1108,6 +1108,12 @@
             </tr>
             {% endfor %}
          </div>
+         {% else %}
+          {% if form.published.data == "False" %}
+          <input id="published-1" name="published" type="text" value="0" style="display:none;">
+          {% else %}
+          <input id="published-1" name="published" type="text" value="1" style="display:none;">
+          {% endif %}
          {% endif %}
 
          <div class="form-group">
