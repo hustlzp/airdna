@@ -62,8 +62,11 @@
     <div class="zm-profile-header-main">
       <div class="top">
         <div class="title-section ellipsis">
-          <span class="name">{{ user.name }}</span>，
+          <span class="name">{{ user.name }}</span>
+          {% if user.introduction %}
+          ，
           <span class="bio" title="{{ user.introduction }}">{{ user.introduction }}</span>
+          {% endif %}
         </div>
       </div>
       <div class="body clearfix">
