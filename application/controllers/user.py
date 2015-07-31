@@ -43,7 +43,7 @@ def likes(uid, page):
 @UserPermission()
 def online():
     """在线设置"""
-    g.user.online = True
+    g.user.online = 1
     
     return "You Are Online"
 
