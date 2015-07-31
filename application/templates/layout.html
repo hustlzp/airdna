@@ -189,9 +189,9 @@
 {% if g.user %}
 <script type="text/javascript">
 setInterval(function(){
-    $.ajax({url: "http://127.0.0.1:5000/my/online", method: 'post'});
+    $.ajax({url: "/my/online", method: 'post'});
         }, 60*1000);
-$.ajax({url: "http://127.0.0.1:5000/my/online", method: 'post'});
+$.ajax({url: "/my/online", method: 'post'});
 $(document).ready(function(){
         /* 取消关注 */
         $("body").delegate(".unfollow", 'click', function(e){
