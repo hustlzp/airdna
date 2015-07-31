@@ -213,7 +213,7 @@ def messages(page):
 @bp.route('/my/messages/check', methods=['POST'])
 @UserPermission()
 def check_all_messages():
-    notifications = g.user.messages.filter(~Notification.checked)
+    notifications = g.user.messages.filter(~Message.checked)
     for notification in notifications:
         notification.checked = True
         notification.checked_at = datetime.now()

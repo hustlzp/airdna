@@ -1,5 +1,5 @@
 .user-profile-header {
-  padding-top: 50px;
+  /*padding-top: 20px;*/
 }
 .user-profile-header .user-info {
   text-align: center;
@@ -102,4 +102,10 @@
 }
 .user-avatar-link .user-avatar-popover {
   cursor: pointer;
+}
+.follow{
+  cursor:pointer;
+}
+.unfollow{
+  cursor:pointer;
 }

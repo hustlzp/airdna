@@ -53,6 +53,9 @@ class User(db.Model):
     def is_followed(self, user_id):
         return self.follows.filter(Follow.followed_id == user_id).count() > 0
 
+    def is_block(self, user_id):
+        return self.blocked.filter(BlackList.blocked_id == user_id).count() > 0
+
     @property
     def avatar_url(self):
         return avatars.url(self.avatar)
