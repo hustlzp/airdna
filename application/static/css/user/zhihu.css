@@ -8148,7 +8148,7 @@ html.no-touch .zm-profile-header-user-describe a:hover span {
 
 .zm-profile-header-operation {
 	padding: 12px 18px;
-	border-top: 1px dotted #eee
+	border-top: 1px;
 }
 
 .zm-profile-header-info-list {
