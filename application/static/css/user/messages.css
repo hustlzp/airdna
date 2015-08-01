@@ -52,5 +52,6 @@
 .message-content {
   line-height: 1.6;
   margin-bottom: 8px;
+  margin-top: 10px;
   color: #666;
 }
