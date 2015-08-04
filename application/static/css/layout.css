@@ -70,3 +70,16 @@ body {
 #footer a:hover {
   color: #3378ca;
 }
+#favicon-wx-share{
+  position: fixed;
+  top: 20%;
+}
+#favicon-wx-share img{
+  width:150px;
+}
+#favicon-wx-share div{
+  margin-top: 20px;
+  text-align: center;
+  font-size: 15px;
+  padding-bottom: 5px;
+}
