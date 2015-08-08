@@ -70,16 +70,34 @@ body {
 #footer a:hover {
   color: #3378ca;
 }
-#favicon-wx-share{
-  position: fixed;
-  top: 20%;
+.search{
+  width: 200px;
+  margin-left:20%;
 }
-#favicon-wx-share img{
+.search-input{
+  /*margin-left: 20%;*/
+  /*border-width: 2px 0 2px 2px;*/
+  border-color: #B61D1D;
+  border-style: solid;
+  outline: 0;
+  font-size: 14px;
+  margin-top: 15%;
   width:150px;
 }
-#favicon-wx-share div{
-  margin-top: 20px;
-  text-align: center;
-  font-size: 15px;
-  padding-bottom: 5px;
+.search-button{
+  font-size: 12px;
+  height: 32px;
+  color: #333;
+  background-color: #f7f7f7;
+  /*float: left;*/
+  height: 36px;
+  background: #B61D1D;
+  border: none;
+  line-height: 1;
+  color: #fff;
+  font-family: "Microsoft YaHei";
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  zoom: 1;
 }
