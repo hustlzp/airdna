@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% from "macros/_piece.html" import render_pieces_by_date %}
+
+{% block page_title %}AirDNA{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="pieces-container">
+
+   <div class="panel panel-primary pieces-by-date-wap">
+
+      <div class="panel-body">
+   <div class="pieces-wap">
+      {% for piece in data.data %}
+
+         <div class="piece {% if loop.last %}last{% endif %}" data-piece-id={{ piece.id }}>
+            <div class="media">
+               <div class="media-left">
+               </div>
+
+               <div class="media-body">
+                  <div class="pull-right text-right other-info">
+
+                     <div class="comments-count text-right">
+                     </div>
+                  </div>
+
+                  <div class="content">
+                      <a href="http://www.ncbi.nlm.nih.gov/pubmed/{{ piece.id }}"> {{ piece.title }}</a>
+                  </div>
+
+                  <div class="meta">
+                    <div class="source-wap">
+                        <span class="source">{{ piece.authors }} {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
+                    </div>
+                        <a href="javascript: void(0)" class="btn-add-collection">
+                            <span class="fa fa-plus"></span>收藏</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      {% endfor %}
+   </div>
+         {% if not data %}
+            <div class="text-center share-piece">
+               {#               {% if page == 1 %}#}
+               {% if show_modal %}
+                  <a href="{{ url_for('piece.add') }}" class="need-signed-in">
+                     <span class="fa fa-plus"></span> 分享文献
+                  </a>
+               {% else %}
+                  <span class="text-light">无</span>
+               {% endif %}
+            </div>
+         {% endif %}
+
+      </div>
+
+   </div>
+
+   {% if show_modal %}
+      <script type="text/javascript">
+         (function () {
+            // 显示被隐藏的文献
+            $(document).onOnce('click', '.btn-show-hide-pieces', function () {
+               $(this).parents('.pieces-by-date-wap').first().find('.hide-pieces').show();
+               $(this).parents('.panel-footer').first().detach();
+            });
+         })();
+      </script>
+   {% endif %}
+      </div>
+   </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("#favicon-wx-share div").hover(
+        function(e){
+            $("#favicon-wx-share img").show();
+            $(e.target).hide();
+        }    
+    );
+    $("#favicon-wx-share div").click(
+        function(e){
+            $("#favicon-wx-share img").show();
+            $(e.target).hide();
+        }    
+    );
+    $("#favicon-wx-share img").click(
+        function(e){
+            $("#favicon-wx-share div").show();
+            $(e.target).hide();
+        }    
+    );
+    
+});   
+</script>
+{% endblock %}

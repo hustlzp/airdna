@@ -21,7 +21,8 @@ def NCBIsearch(**kwargs):
             'db': kwargs.get("db", "pubmed"),
             'term': kwargs.get("term", 'PD1'),
             'retstart': kwargs.get("retstart", 0),
-            'retmode': 'json'
+            'retmode': 'json',
+            'sort': 'pub+date',
             }
     result = {"data": [], "totalCount": 0, "retstart": 0}
     try:
@@ -45,7 +46,7 @@ def NCBIsearch(**kwargs):
                 })
     except:
         pass
-    return json.dumps(result)
+    return result
     
 
 @bp.route('/search/', methods=['GET'])
@@ -57,4 +58,5 @@ def search():
             'retstart': request.args.get("retstart", 0),
             'retmode': 'json'
             }
-    return NCBIsearch(**search_args)
+    data = NCBIsearch(**search_args)
+    return render_template("site/searchNCBI.html", data = data)
