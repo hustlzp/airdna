@@ -4,9 +4,11 @@ from flask import render_template, Blueprint, redirect, request, url_for, g, \
     get_template_attribute, json, abort
 from ..utils.permissions import UserPermission, PieceAddPermission, PieceEditPermission
 from ..utils.helpers import generate_lcs_html
+from ..utils.ncbi import NCBISummary
 from ..models import db, User, Piece, PieceVote, PieceComment, CollectionPiece, Collection, \
     PieceSource, PieceAuthor, PIECE_EDIT_KIND, PieceEditLog, PieceCommentVote, Notification, \
-    NOTIFICATION_KIND, PieceEditLogReport, CollectionEditLog, COLLECTION_EDIT_KIND
+    NOTIFICATION_KIND, PieceEditLogReport, CollectionEditLog, COLLECTION_EDIT_KIND,\
+    NCBIPiece, NCBICollectionPiece
 from ..forms import PieceForm
 
 bp = Blueprint('piece', __name__)
@@ -388,6 +390,48 @@ def remove_from_collection(uid, collection_id):
     db.session.commit()
     return json.dumps({'result': True})
 
+@bp.route('/ncbicollectionpiece/<string:dbname>/<int:uid>/', methods=['POST'])
+@UserPermission()
+def add_to_ncbicollection(dbname, uid):
+    """" 收藏 从NCBI搜到的文章 """
+    piece = NCBIPiece.query.filter(NCBIPiece.db_name == dbname, NCBIPiece.uid == uid).first()
+    if not piece:
+        data = NCBISummary(db = dbname, id = uid)
+        if data:
+            data = data["result"][str(uid)]
+            piece = NCBIPiece(uid = uid, title = data["title"], \
+                    db_name = dbname, author = data["authors"][0]["name"],\
+                    pub_date = data["epubdate"], pub_journal = data["fulljournalname"],\
+                    pub_journal_page = data["elocationid"])
+            db.session.add(piece)
+        else:
+            abort(404)
+    collection_piece = NCBICollectionPiece.query.filter(NCBICollectionPiece.piece_id == piece.id,\
+            NCBICollectionPiece.user_id == g.user.id).first()
+
+    if not collection_piece:
+        collection_piece = NCBICollectionPiece(piece_id = piece.id, user_id = g.user.id)
+        db.session.add(collection_piece)
+        db.session.commit()
+        g.user.ncbipieces_count += 1
+        db.session.add(g.user)
+        db.session.commit()
+
+    print g.user.ncbipieces_count, g.user.pieces_count
+    return  json.dumps({"collection_id": collection_piece.id})
+    
+
+@bp.route('/ncbicollectionpiece/<int:collection_id>/', methods=['DELETE'])
+@UserPermission()
+def remove_from_ncbicollection(collection_id):
+    """取消收藏NCBI 中的文章"""
+    collection_piece = g.user.ncbi_collections.filter(NCBICollectionPiece.id == collection_id).first()
+    if collection_piece:
+        db.session.delete(collection_piece)
+        g.user.ncbipieces_count -= 1
+        db.session.add(g.user)
+        db.session.commit()
+    return json.dumps({'result': True})
 
 @bp.route('/piece/meet')
 def meet():

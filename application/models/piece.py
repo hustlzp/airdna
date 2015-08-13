@@ -277,3 +277,16 @@ class PieceEditLogReport(db.Model):
                                              lazy='dynamic',
                                              order_by='desc('
                                                       'PieceEditLogReport.created_at)'))
+# 用来记录NCBI 搜到的并被用户收藏的文章 #
+class NCBIPiece(db.Model):
+    """Model for ncbi piece"""
+    id = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.Integer)
+    db_name = db.Column(db.String(100))
+    title = db.Column(db.Text)
+    author = db.Column(db.String(100))
+    pub_date = db.Column(db.DateTime)
+    pub_journal = db.Column(db.String(100))
+    pub_journal_page = db.Column(db.String(100))
+
+    created_at = db.Column(db.DateTime, default=datetime.now)

@@ -42,7 +42,8 @@ def NCBIsearch(**kwargs):
                 "authors": x["authors"][0]["name"],
                 "title": x["title"],
                 "pub_journal": x["fulljournalname"],
-                "pub_page": x["elocationid"]
+                "pub_page": x["elocationid"],
+                'db': kwargs.get("db", "pubmed"),
                 })
     except:
         pass

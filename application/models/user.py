@@ -20,6 +20,7 @@ class User(db.Model):
 
     votes_count = db.Column(db.Integer, default=0)
     pieces_count = db.Column(db.Integer, default=0)
+    ncbipieces_count = db.Column(db.Integer, default=0)
     published_count = db.Column(db.Integer, default=0)
     liked_collections_count = db.Column(db.Integer, default=0)
 
@@ -55,6 +56,12 @@ class User(db.Model):
 
     def is_block(self, user_id):
         return self.blocked.filter(BlackList.blocked_id == user_id).count() > 0
+
+    def is_ncbi_collections(self, dbname, uid):
+        
+        from ..models import NCBIPiece, NCBICollectionPiece
+        piece = NCBIPiece.query.filter(NCBIPiece.db_name == dbname, NCBIPiece.uid == uid).first() 
+        return piece and self.ncbi_collections.filter(NCBICollectionPiece.piece_id == piece.id).first()
 
     @property
     def avatar_url(self):

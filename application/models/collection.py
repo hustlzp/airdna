@@ -170,3 +170,20 @@ class CollectionEditLogReport(db.Model):
                               lazy='dynamic',
                               order_by='desc(CollectionEditLogReport.created_at)'
                           ))
+
+
+class NCBICollectionPiece(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+
+    piece_id = db.Column(db.Integer, db.ForeignKey('ncbi_piece.id'))
+    piece = db.relationship('NCBIPiece',
+                            backref=db.backref('ncbipiece_collections',
+                                               lazy='dynamic',
+                                               order_by='asc(NCBICollectionPiece.created_at)'))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User',
+                           backref=db.backref('ncbi_collections',
+                                              lazy='dynamic',
+                                              order_by='desc(NCBICollectionPiece.created_at)'))

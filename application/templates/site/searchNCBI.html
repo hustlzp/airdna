@@ -13,6 +13,7 @@
       {% for piece in data.data %}
 
          <div class="piece {% if loop.last %}last{% endif %}" data-piece-id={{ piece.id }}>
+             <input name="" class="hidden" ></input> 
             <div class="media">
                <div class="media-left">
                </div>
@@ -32,8 +33,19 @@
                     <div class="source-wap">
                         <span class="source">{{ piece.authors }} {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
                     </div>
-                        <a href="javascript: void(0)" class="btn-add-collection">
+                    {% if not g.user %}
+                    <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db }}' data-uid='{{ piece.id }}'>
                             <span class="fa fa-plus"></span>收藏</a>
+                    {% else %}
+                        {% if g.user.is_ncbi_collections(piece.db, piece.id) %}                        
+                            <a href="javascript: void(0)" class="btn-collection" data-dbname='{{ piece.db }}' data-uid='{{ piece.id }}'>
+                                已收藏</a>
+                        {% else %}
+                        <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db }}' data-uid='{{ piece.id }}'>
+                                <span class="fa fa-plus"></span>收藏</a>
+
+                        {% endif %}
+                    {% endif %}
                   </div>
                </div>
             </div>
@@ -73,25 +85,38 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+    $(".pieces-wap").delegate(".meta .btn-add-collection", "click", function(e){
+        
+            var $e = $(e.currentTarget);
+            $.ajax({
+                url: "/ncbicollectionpiece/" + $e.data("dbname") + "/" + $e.data("uid") + '/',    
+                method: 'POST',
+                success: function(data, textStatus, jqXHR){
+                    data = JSON.parse(data);
+                    $e.html("取消收藏").addClass("btn-remove-collection").removeClass("btn-add-collection");;
+                    $e.data("collection_id", data.collection_id);
+                },
+                error: function(){
+                    $e.html("收藏失败");
+                },
+            });
 
-    $("#favicon-wx-share div").hover(
-        function(e){
-            $("#favicon-wx-share img").show();
-            $(e.target).hide();
-        }    
-    );
-    $("#favicon-wx-share div").click(
-        function(e){
-            $("#favicon-wx-share img").show();
-            $(e.target).hide();
-        }    
-    );
-    $("#favicon-wx-share img").click(
-        function(e){
-            $("#favicon-wx-share div").show();
-            $(e.target).hide();
-        }    
-    );
+        });
+    $(".pieces-wap").delegate(".meta .btn-remove-collection", "click", function(e){
+        
+            var $e = $(e.target);
+            $.ajax({
+                url: "/ncbicollectionpiece/" + $e.data("collection_id") + "/",    
+                method: 'DELETE',
+                success: function(data, textStatus, jqXHR){
+                    $e.html("<span class='fa fa-plus'>收藏</span>").addClass("btn-add-collection").removeClass("btn-remove-collection");;
+                },
+                error: function(){
+                    $e.html("取消失败");
+                },
+            });
+
+        });
     
 });   
 </script>
