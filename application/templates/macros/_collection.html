@@ -348,3 +348,74 @@
          class="fa fa-close"></span></a>
    </span>
 {% endmacro %}
+
+{% macro render_ncbi_collections(collections, attr=None) %}
+   <div class="collections-wap clearfix row">
+      {% for collection in collections %}
+
+         <div class="col-sm-6 collection-wap">
+            <div class="collection media " data-collection-id="{{ collection.id }}">
+               <div class="media-left">
+                  <!--<a href="#">-->
+                     <!--<img src="{{ collection.cover_url }}" alt=""-->
+                          <!--class="media-object img-circle collection-cover"/>-->
+                  <!--</a>-->
+               </div>
+
+               <div class="media-body">
+                  <div class="title">{{ collection.title }}</div>
+                  <div class="desc">{{ collection.desc or "" }}</div>
+               </div>
+
+               {% if g.user %}
+                  <div class="btn-like-collection need-signed-in {% if collection.liked_by_user() %}liked{% endif %}"
+                       data-id="{{ collection.id }}">
+                     <span class="fa fa-bookmark-o" title="收藏集合"></span>
+                     <span class="fa fa-bookmark" title="取消收藏"></span>
+                  </div>
+               {% endif %}
+            </div>
+         </div>
+      {% endfor %}
+   </div>
+
+   <script type="text/javascript">
+      (function () {
+         // 跳转集合单页
+         $('.collection').click(function () {
+            var collectionId = $(this).data('collection-id');
+            window.location = urlFor('collection.view', {'uid': collectionId});
+         });
+
+         // 收藏集合
+         $('.btn-like-collection').click(function (e) {
+            var id = $(this).data('id');
+            var url = "";
+            var _this = $(this);
+            var liked = $(this).hasClass('liked');
+
+            if (liked) {
+               url = urlFor('collection.unlike', {uid: id});
+            } else {
+               url = urlFor('collection.like', {uid: id});
+            }
+
+            _this.toggleClass('liked');
+
+            $.ajax({
+               url: url,
+               method: 'post',
+               dataType: 'json'
+            }).done(function (response) {
+               if (!response.result) {
+                  _this.toggleClass('liked');
+               }
+            }).fail(function () {
+               _this.toggleClass('liked');
+            });
+
+            e.stopPropagation();
+         });
+      })();
+   </script>
+{% endmacro %}

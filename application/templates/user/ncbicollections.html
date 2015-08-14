@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% from "macros/_piece.html" import render_ncbi_pieces %}
+{% from "macros/_user.html" import render_user_profile_header %}
+{% from "macros/_piece.html" import like_ncbi_piece_js %}
+{% from 'macros/_utils.html' import pagination %}
+
+{% block page_title %}{{ user.name }} - 收藏夹 - AirDNA{% endblock %}
+{% block page_content %}
+   <div class="container">
+      <div class="panel panel-primary">
+         <div class="panel-body panel-body-no-padding">
+            {{ render_user_profile_header(user, active="likencbis") }}
+            {{ render_ncbi_pieces(collections.items, attr="piece", show_like = True) }}
+         </div>
+
+         {% if collections.pages > 1 %}
+            <div class="panel-footer">
+               {{ pagination(collections) }}
+            </div>
+         {% endif %}
+      </div>
+   </div>
+   {{ like_ncbi_piece_js() }}
+{% endblock %}

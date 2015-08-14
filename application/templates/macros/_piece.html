@@ -1312,3 +1312,100 @@
       })();
    </script>
 {% endmacro %}
+
+{% macro render_ncbi_pieces(pieces, attr=None, show_like = True) %}
+   <div class="pieces-wap">
+      {% for piece in pieces %}
+        {% set collection = piece %}
+         {% if attr %}
+            {% set collection = piece %}
+            {% set piece = piece[attr] %}
+         {% endif %}
+
+         <div class="piece {% if loop.last %}last{% endif %}" data-piece-id={{ piece.id }}>
+            <div class="media">
+               <div class="media-left">
+               </div>
+
+               <div class="media-body">
+                  <div class="pull-right text-right other-info">
+
+                     <div class="comments-count text-right">
+                     </div>
+                  </div>
+
+                  <div class="content">
+                    <a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/{{ piece.uid }}"> {{ piece.title }}</a>
+                  </div>
+
+                  <div class="meta">
+                    <div class="source-wap">
+                        <span class="source">{{ piece.author }} | {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
+                    </div>
+                    {% if show_like %}
+                    <a href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                                取消收藏</a>
+                    {% else %}
+                    {% if not g.user %}
+                    <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                            <span class="fa fa-plus"></span>收藏</a>
+                    {% else %}
+                        {% if g.user.is_ncbi_collections(piece.db_name, piece.uid) %}                        
+
+                            <a href="javascript: void(0)" class="btn-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                                已收藏</a>
+                        {% else %}
+                        <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                                <span class="fa fa-plus"></span>收藏</a>
+
+                        {% endif %}
+                    {% endif %}
+                    {% endif %}
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      {% endfor %}
+   </div>
+
+{% endmacro %}
+{% macro like_ncbi_piece_js() %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".pieces-wap").delegate(".meta .btn-add-collection", "click", function(e){
+        
+            var $e = $(e.currentTarget);
+            $.ajax({
+                url: "/ncbicollectionpiece/" + $e.data("dbname") + "/" + $e.data("uid") + '/',    
+                method: 'POST',
+                success: function(data, textStatus, jqXHR){
+                    data = JSON.parse(data);
+                    $e.html("取消收藏").addClass("btn-remove-collection").removeClass("btn-add-collection");;
+                    $e.data("collection_id", data.collection_id);
+                },
+                error: function(){
+                    $e.html("收藏失败");
+                },
+            });
+
+        });
+    $(".pieces-wap").delegate(".meta .btn-remove-collection", "click", function(e){
+        
+            var $e = $(e.target);
+            $.ajax({
+                url: "/ncbicollectionpiece/" + $e.data("collection_id") + "/",    
+                method: 'DELETE',
+                success: function(data, textStatus, jqXHR){
+                    $e.html("<span class='fa fa-plus'>收藏</span>").addClass("btn-add-collection").removeClass("btn-remove-collection");;
+                },
+                error: function(){
+                    $e.html("取消失败");
+                },
+            });
+
+        });
+    
+});   
+</script>
+{% endmacro %}

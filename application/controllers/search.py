@@ -40,13 +40,13 @@ def NCBIsearch(**kwargs):
         for x in data["result"]["uids"]:
             x = data["result"][x]
             result["data"].append({
-                "id": x["uid"],
+                "uid": x["uid"],
                 "pub_date": x["epubdate"],
-                "authors": x["authors"][0]["name"],
+                "author": x["authors"][0]["name"],
                 "title": x["title"],
                 "pub_journal": x["fulljournalname"],
                 "pub_page": x["elocationid"],
-                'db': kwargs.get("db", "pubmed"),
+                'db_name': kwargs.get("db", "pubmed"),
                 })
     except:
         pass

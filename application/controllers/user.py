@@ -38,6 +38,13 @@ def likes(uid, page):
     collections = user.liked_collections.paginate(page, 20)
     return render_template('user/collections.html', user=user, collections=collections)
 
+@bp.route('/people/<int:uid>/likencbis', defaults={'page': 1})
+@bp.route('/people/<int:uid>/likencbis/page/<int:page>')
+@UserPermission()
+def likencbis(uid, page):
+    user = User.query.get_or_404(uid)
+    collections = user.ncbi_collections.paginate(page, 20)
+    return render_template('user/ncbicollections.html', user=user, collections=collections)
 
 @bp.route('/my/online', methods=['POST'])
 @UserPermission()
