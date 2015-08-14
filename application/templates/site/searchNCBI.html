@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% from "macros/_piece.html" import render_pieces_by_date %}
+{% from 'macros/_utils.html' import pagination %}
 
 {% block page_title %}AirDNA{% endblock %}
 {% block page_content %}
@@ -10,7 +11,7 @@
 
       <div class="panel-body">
    <div class="pieces-wap">
-      {% for piece in data.data %}
+      {% for piece in data.items %}
 
          <div class="piece {% if loop.last %}last{% endif %}" data-piece-id={{ piece.id }}>
              <input name="" class="hidden" ></input> 
@@ -81,6 +82,11 @@
       </script>
    {% endif %}
       </div>
+         {% if data.pages > 1 %}
+            <div class="panel-footer">
+               {{ pagination(data) }}
+            </div>
+         {% endif %}
    </div>
 
 <script type="text/javascript">

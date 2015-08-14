@@ -30,7 +30,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.add_column(u'user', sa.Column('ncbipieces_count', sa.Integer(), nullable=False, default=0))
+    op.add_column(u'user', sa.Column('ncbipieces_count', sa.Integer(), nullable=True))
     ### end Alembic commands ###
 
 

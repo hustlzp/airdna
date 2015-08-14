@@ -285,7 +285,7 @@ class NCBIPiece(db.Model):
     db_name = db.Column(db.String(100))
     title = db.Column(db.Text)
     author = db.Column(db.String(100))
-    pub_date = db.Column(db.DateTime)
+    pub_date = db.Column(db.String(100))
     pub_journal = db.Column(db.String(100))
     pub_journal_page = db.Column(db.String(100))
 

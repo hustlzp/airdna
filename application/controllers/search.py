@@ -6,6 +6,7 @@ from urllib import urlencode
 from urllib2 import urlopen
 
 from flask import render_template, Blueprint, request
+from flask.ext.sqlalchemy import Pagination
 
 bp = Blueprint('search', __name__)
 
@@ -20,17 +21,19 @@ def NCBIsearch(**kwargs):
     search_args = {
             'db': kwargs.get("db", "pubmed"),
             'term': kwargs.get("term", 'PD1'),
-            'retstart': kwargs.get("retstart", 0),
+            'retstart': (int(kwargs.get("page", 1)) - 1) * 10,
+            'retmax': '10',
             'retmode': 'json',
             'sort': 'pub+date',
             }
-    result = {"data": [], "totalCount": 0, "retstart": 0}
+    result = {"data": [], "totalCount": 0, "retstart": 0, "retmax": 10}
     try:
         data = urlopen(SEARCH_URL, urlencode(search_args)).read()
         data = json.loads(data)
         print data
         result["totalCount"] = int(data["esearchresult"]["count"])
         result["retstart"] = int(data["esearchresult"]["retstart"])
+        result["retmax"] = 10
         ulist = ",".join(data["esearchresult"]["idlist"])
         data = urlopen(SUMMARY_URL, urlencode({"db": kwargs.get("db", "pubmed"), "id": ulist, 'retmode': 'json'})).read()
         data = json.loads(data)
@@ -47,7 +50,7 @@ def NCBIsearch(**kwargs):
                 })
     except:
         pass
-    return result
+    return Pagination(None, int(kwargs.get("page", 0)), 10, result["totalCount"], result["data"])
     
 
 @bp.route('/search/', methods=['GET'])
@@ -57,7 +60,8 @@ def search():
             'db': request.args.get("db", "pubmed"),
             'term': request.args.get("query", 'PD1'),
             'retstart': request.args.get("retstart", 0),
-            'retmode': 'json'
+            'retmode': 'json',
+            'page': request.args.get("page", 1),
             }
     data = NCBIsearch(**search_args)
     return render_template("site/searchNCBI.html", data = data)
