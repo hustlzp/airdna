@@ -77,12 +77,17 @@ body {
 .search-input{
   /*margin-left: 20%;*/
   /*border-width: 2px 0 2px 2px;*/
-  border-color: #B61D1D;
-  border-style: solid;
-  outline: 0;
-  font-size: 14px;
-  margin-top: 15%;
+  /*border-color: #B61D1D;*/
+  /*border-style: solid;*/
+  /*outline: 0;*/
+  /*font-size: 14px;*/
+  /*margin-top: 15%;*/
+  background: url("/static/image/search@1x.png") no-repeat 95% 50% #ffffff;
+  /*padding: 0 0 0 30px; */
   width:150px;
+  border-radius: 21px;
+  transition: all .2s ease-in-out;
+  margin-top:2px;
 }
 .search-button{
   font-size: 12px;
@@ -100,4 +105,7 @@ body {
   cursor: pointer;
   position: relative;
   zoom: 1;
+}
+.fa-search{
+  margin-top:13px;
 }

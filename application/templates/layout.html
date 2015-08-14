@@ -80,13 +80,20 @@
                <small>品读文献，赞美科学</small>
             </a>
          </div>
-         <div class="navbar-header search">
+         <div class="navbar-header search hidden">
             <input class="search-input"></input>
             <button onclick="window.location.href='/search/?query=' + $('.search-input').val();return false;" class="search-button cw-icon" type="button"><i></i>搜索</button>
          </div>
 
          <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-left" role="search" action="/search/" method="GET">
+                    <div class="form-group">
+                        <input type="text" class="form-control search-input" placeholder="搜索pubmed" name="query">
+                    </div>
+                    <!--<button type="submit" class="btn btn-default"></button>-->
+                    <!--<span class="fa fa-search"></span> 搜索-->
+                </form>
                 <!--<li>-->
                     <!--<input class="search"></input>-->
                     <!--<span class="fa fa-search"></span> 搜索-->
@@ -196,6 +203,10 @@ setInterval(function(){
         }, 60*1000);
 $.ajax({url: "/my/online", method: 'post'});
 $(document).ready(function(){
+        /* 搜索PUBMED */
+        $(".search-input").on('input', function(e){
+                
+        });
         /* 取消关注 */
         $("body").delegate(".unfollow", 'click', function(e){
             var userId = $(e.target).attr("data-userid");
