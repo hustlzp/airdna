@@ -13,10 +13,14 @@
         <div class="panel panel-primary pieces-by-date-wap">
             <div class="panel-body">
                 {{ render_ncbi_pieces(data.items, attr=None, show_like = False) }}
-
             </div>
         </div>
       </div>
+         {% if data.pages > 1 %}
+            <div class="panel-footer">
+               {{ pagination(data) }}
+            </div>
+         {% endif %}
    </div>
 
    {{ like_ncbi_piece_js() }}
