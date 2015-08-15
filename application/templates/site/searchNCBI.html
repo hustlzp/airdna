@@ -2,10 +2,12 @@
 {% from "macros/_piece.html" import render_pieces_by_date %}
 {% from "macros/_piece.html" import render_ncbi_pieces %}
 {% from "macros/_piece.html" import like_ncbi_piece_js %}
+{% from "macros/_piece.html" import share_ncbi_piece_js %}
 {% from 'macros/_utils.html' import pagination %}
 
 {% block page_title %}AirDNA{% endblock %}
 {% block page_content %}
+   {{ share_ncbi_piece_js() }}
    <div class="container">
       <div class="pieces-container">
         <div class="panel panel-primary pieces-by-date-wap">

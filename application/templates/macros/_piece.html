@@ -1361,7 +1361,11 @@
                         {% endif %}
                     {% endif %}
                     {% endif %}
-
+                    <div class="bshare-custom">
+                      <div class="bsPromo bsPromo2"></div>
+                      <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a>
+                      <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+                    </div>
                   </div>
                </div>
             </div>
@@ -1407,5 +1411,23 @@ $(document).ready(function(){
         });
     
 });   
+</script>
+{% endmacro %}
+{% macro share_ncbi_piece_js() %}
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&style=2&textcolor=#000&bgcolor=none&
+bp=renren,sinaminiblog,qqxiaoyou&ssc=false&sn=false&text=分享"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".content a").each(function(index, e){
+      console.log(e, e.text, e.href);
+        bShare.addEntry({
+        title: "我在airdna上查阅了最新的科研文献", 
+        url: "http://www.airdna.com",
+        summary: e.text
+      });  
+    });
+});
 </script>
 {% endmacro %}

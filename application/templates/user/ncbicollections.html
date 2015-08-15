@@ -2,10 +2,12 @@
 {% from "macros/_piece.html" import render_ncbi_pieces %}
 {% from "macros/_user.html" import render_user_profile_header %}
 {% from "macros/_piece.html" import like_ncbi_piece_js %}
+{% from "macros/_piece.html" import share_ncbi_piece_js %}
 {% from 'macros/_utils.html' import pagination %}
 
 {% block page_title %}{{ user.name }} - 收藏夹 - AirDNA{% endblock %}
 {% block page_content %}
+   {{ share_ncbi_piece_js() }}
    <div class="container">
       <div class="panel panel-primary">
          <div class="panel-body panel-body-no-padding">
@@ -21,4 +23,6 @@
       </div>
    </div>
    {{ like_ncbi_piece_js() }}
+<!--<div class="bshare-custom"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a>-->
+<!--</div>-->
 {% endblock %}

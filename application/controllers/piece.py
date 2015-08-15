@@ -412,7 +412,6 @@ def add_to_ncbicollection(dbname, uid):
     if not collection_piece:
         collection_piece = NCBICollectionPiece(piece_id = piece.id, user_id = g.user.id)
         db.session.add(collection_piece)
-        db.session.commit()
         g.user.ncbipieces_count += 1
         db.session.add(g.user)
         db.session.commit()
