@@ -1339,9 +1339,10 @@
                   </div>
 
                   <div class="meta">
-                    <div class="source-wap">
+                    <div class="source-wap" style="float:left">
                         <span class="source">{{ piece.author }} | {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
                     </div>
+                    <div style="float:left;margin-right:10px;">
                     {% if show_like %}
                     <a href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
                                 取消收藏</a>
@@ -1361,7 +1362,8 @@
                         {% endif %}
                     {% endif %}
                     {% endif %}
-                    <div class="bshare-custom">
+                    </div>
+                    <div class="bshare-custom" style="float:left;">
                       <div class="bsPromo bsPromo2"></div>
                       <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a>
                       <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
