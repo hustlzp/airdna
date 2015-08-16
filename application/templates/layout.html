@@ -89,7 +89,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <form class="navbar-form navbar-left" role="search" action="/search/" method="GET">
                     <div class="form-group">
-                        <input type="text" class="form-control search-input" placeholder="搜索pubmed" name="query">
+                        <input type="text" class="form-control search-input" placeholder="搜索  pubmed" name="query">
                     </div>
                     <!--<button type="submit" class="btn btn-default"></button>-->
                     <!--<span class="fa fa-search"></span> 搜索-->
@@ -128,6 +128,11 @@
                         {% if messages_count %}
                            <span class="notifications-count">{{ messages_count }}</span>
                         {% endif %}
+                     </a>
+                  </li>
+                  <li>
+                     <a href="{{ url_for('user.likencbis', uid=g.user.id) }}">
+                        收藏夹
                      </a>
                   </li>
 

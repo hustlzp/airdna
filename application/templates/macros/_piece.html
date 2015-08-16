@@ -1342,7 +1342,12 @@
                     <div class="source-wap" style="float:left">
                         <span class="source">{{ piece.author }} | {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
                     </div>
-                    <div style="float:left;margin-right:10px;">
+                    <div class="bshare-custom pull-right" style="float:left;">
+                      <div class="bsPromo bsPromo2"></div>
+                      <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a>
+                      <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+                    </div>
+                    <div class="pull-right" style="float:left;margin-right:10px;">
                     {% if show_like %}
                     <a href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
                                 取消收藏</a>
@@ -1362,11 +1367,6 @@
                         {% endif %}
                     {% endif %}
                     {% endif %}
-                    </div>
-                    <div class="bshare-custom" style="float:left;">
-                      <div class="bsPromo bsPromo2"></div>
-                      <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a>
-                      <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
                     </div>
                   </div>
                </div>
@@ -1417,13 +1417,11 @@ $(document).ready(function(){
 {% endmacro %}
 {% macro share_ncbi_piece_js() %}
 
-<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&style=2&textcolor=#000&bgcolor=none&
-bp=renren,sinaminiblog,qqxiaoyou&ssc=false&sn=false&text=分享"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&textcolor=#000&bgcolor=none&ssc=false&sn=false&text=分享"></script>
 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     $(".content a").each(function(index, e){
-      console.log(e, e.text, e.href);
         bShare.addEntry({
         title: "我在airdna上查阅了最新的科研文献", 
         url: "http://www.airdna.com",
