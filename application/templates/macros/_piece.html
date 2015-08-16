@@ -1349,8 +1349,10 @@
                     </div>
                     <div class="pull-right" style="float:left;margin-right:10px;">
                     {% if show_like %}
-                    <a href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                                取消收藏</a>
+                    <a style="display:{% if show_like or (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none;{% endif %}" href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                                <img src="/static/image/unlike.png" title="取消收藏"></a>
+                              <a style="display:{% if not show_like and not (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none{% endif %};" href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                            <img src="/static/image/like.png" title="收藏"></a>
                     {% else %}
                     {% if not g.user %}
                     <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
@@ -1387,8 +1389,8 @@ $(document).ready(function(){
                 method: 'POST',
                 success: function(data, textStatus, jqXHR){
                     data = JSON.parse(data);
-                    $e.html("取消收藏").addClass("btn-remove-collection").removeClass("btn-add-collection");;
-                    $e.data("collection_id", data.collection_id);
+                    $(".btn-remove-collection[data-uid='" + $e.data("uid") + "']").show().data("collection_id", data.collection_id);
+                    $e.hide();
                 },
                 error: function(){
                     $e.html("收藏失败");
@@ -1398,12 +1400,13 @@ $(document).ready(function(){
         });
     $(".pieces-wap").delegate(".meta .btn-remove-collection", "click", function(e){
         
-            var $e = $(e.target);
+            var $e = $(e.currentTarget);
             $.ajax({
                 url: "/ncbicollectionpiece/" + $e.data("collection_id") + "/",    
                 method: 'DELETE',
                 success: function(data, textStatus, jqXHR){
-                    $e.html("<span class='fa fa-plus'>收藏</span>").addClass("btn-add-collection").removeClass("btn-remove-collection");;
+                  $(".btn-add-collection[data-uid='" + $e.data("uid") + "']").show();
+                  $e.hide();
                 },
                 error: function(){
                     $e.html("取消失败");
