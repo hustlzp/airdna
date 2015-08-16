@@ -1348,27 +1348,10 @@
                       <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
                     </div>
                     <div class="pull-right" style="float:left;margin-right:10px;">
-                    {% if show_like %}
-                    <a style="display:{% if show_like or (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none;{% endif %}" href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                                <img src="/static/image/unlike.png" title="取消收藏"></a>
-                              <a style="display:{% if not show_like and not (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none{% endif %};" href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                            <img src="/static/image/like.png" title="收藏"></a>
-                    {% else %}
-                    {% if not g.user %}
-                    <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                            <span class="fa fa-plus"></span>收藏</a>
-                    {% else %}
-                        {% if g.user.is_ncbi_collections(piece.db_name, piece.uid) %}                        
-
-                            <a href="javascript: void(0)" class="btn-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                                已收藏</a>
-                        {% else %}
-                        <a href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                                <span class="fa fa-plus"></span>收藏</a>
-
-                        {% endif %}
-                    {% endif %}
-                    {% endif %}
+                      <a style="display:{% if show_like or (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none;{% endif %}" href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                                  <img src="/static/image/unlike.png" title="取消收藏"></a>
+                        <a style="display:{% if not show_like and not (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none{% endif %};" href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
+                          <img src="/static/image/like.png" title="收藏"></a>
                     </div>
                   </div>
                </div>
