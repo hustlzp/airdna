@@ -1345,8 +1345,7 @@
                     <div class="bshare-custom pull-right" style="">
                       <div class="bsPromo bsPromo2"></div>
                       <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);" style="background-image:url('/static/image/share_weixin.png');background-size:16px 16px;"></a>
-                      <!--<a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"  style="background-image:url('/static/image/share_weibo.png');background-size:16px 16px;background-position:0 0;"></a>-->
-                      <a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0)"></a>
+                      <a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"  style="background-image:url('/static/image/share_weibo.png');background-size:16px 16px;background-position:0 0;"></a>
                     </div>
                     <div class="pull-right" style="float:left;margin-right:10px;">
                       <a style="display:{% if show_like or (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none;{% endif %}" href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
@@ -1414,7 +1413,7 @@ $(document).ready(function(){
         url: "http://www.airdna.com",
         summary: e.text
       });  
-      $(".bshare-sinaminiblog").first().trigger("click");
+      $(".bshare-sinaminiblog").trigger("click");
     });
 });
 </script>
