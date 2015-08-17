@@ -7,7 +7,6 @@
 
 {% block page_title %}{{ user.name }} - 收藏夹 - AirDNA{% endblock %}
 {% block page_content %}
-   {{ share_ncbi_piece_js() }}
    <div class="container">
       <div class="panel panel-primary">
          <div class="panel-body panel-body-no-padding">
@@ -23,4 +22,5 @@
       </div>
    </div>
    {{ like_ncbi_piece_js() }}
+   {{ share_ncbi_piece_js() }}
 {% endblock %}

@@ -82,7 +82,7 @@ body {
   /*outline: 0;*/
   /*font-size: 14px;*/
   /*margin-top: 15%;*/
-  background: url("/static/image/search@1x.png") no-repeat 95% 50% #ffffff;
+  /*background: url("/static/image/search@1x.png") no-repeat 95% 50% #ffffff;*/
   /*padding: 0 0 0 30px; */
   width:150px;
   border-radius: 21px;
@@ -109,10 +109,27 @@ body {
 .fa-search{
   margin-top:13px;
 }
-/*input.search-input::-moz-placeholder {*/
-        /*font-size:12px;*/
-/*}*/
+input.search-input::-moz-placeholder {
+        font-size:12px;
+}
  
-/*input.search-input::-webkit-input-placeholder {*/
-        /*font-size:12px;*/
-/*}*/
+input.search-input::-webkit-input-placeholder {
+        font-size:12px;
+}
+.search-icon{
+    top: 3px; 
+    right: -3px; 
+    margin-top: -32px;
+    margin-left: -20px;
+    display: block; width: 26px; height: 26px; cursor: pointer;
+    background: transparent;
+}
+.nav-search{
+    color: #66757f; font-size: 13px; 
+    height: 20px; 
+    background: transparent;
+    margin: 3px 0 0 0; padding: 0; border: 0;
+    width: 20px;
+    background: url("/static/image/search@1x.png") no-repeat 95% 50% #ffffff;
+    outline:none;
+}
