@@ -9,8 +9,10 @@
 {% block page_content %}
    <div class="container">
       <div class="panel panel-primary">
+         <div class="panel-heading">
+               收藏夹
+         </div>
          <div class="panel-body panel-body-no-padding">
-            {{ render_user_profile_header(user, active="likencbis") }}
             {{ render_ncbi_pieces(collections.items, attr="piece", show_like = True) }}
          </div>
 

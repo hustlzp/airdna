@@ -175,10 +175,6 @@
             href="{{ url_for('user.likes', uid=user.id) }}">
             {{ user.liked_collections_count }} 收藏
          </a>
-         <a class="tab-item {% if active == "likencbis" %}active{% endif %}"
-            href="{{ url_for('user.likencbis', uid=user.id) }}">
-            {{ user.ncbipieces_count }} 收藏夹
-         </a>
       </div>
    </div>
 {% endmacro %}
