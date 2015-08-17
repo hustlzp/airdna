@@ -801,6 +801,6 @@
 }
 .bsBox{
   -webkit-box-sizing: initial;
-  -moz-box-sizing: !important;
-  box-sizing: !important;
+  -moz-box-sizing: initial;
+  box-sizing: initial;
 }
