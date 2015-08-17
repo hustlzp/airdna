@@ -804,3 +804,6 @@
   -moz-box-sizing: initial;
   box-sizing: initial;
 }
+.bshare-custom .bshare-weixin {
+  background: url("/static/image/share_weixin.png") no-repeat;
+}

@@ -88,7 +88,6 @@ body {
   border-radius: 21px;
   transition: all .2s ease-in-out;
   margin-top:2px;
-  -webkit-input-placeholder { font-size:12px; };
 }
 .search-button{
   font-size: 12px;
@@ -110,10 +109,10 @@ body {
 .fa-search{
   margin-top:13px;
 }
-input.search-input::-moz-placeholder {
-        font-size:12px;
-}
+/*input.search-input::-moz-placeholder {*/
+        /*font-size:12px;*/
+/*}*/
  
-input.search-input::-webkit-input-placeholder {
-        font-size:12px;
-}
+/*input.search-input::-webkit-input-placeholder {*/
+        /*font-size:12px;*/
+/*}*/
