@@ -122,7 +122,6 @@
                         收藏夹
                      </a>
                   </li>
-
                   {% if permissions.AdminPermission().check() %}
                      <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -150,11 +149,9 @@
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{ g.user.name }} 
-                                {% if notifications_count %}
-                                    <span class="notifications-count">{{ notifications_count }}</span>
-                                {% elif messages_count  %}
-                                    <span class="notifications-count">{{ messages_count }}</span>
-                                {% endif %}
+                        {% if notifications_count or messages_count %}
+                        <i class="W_new"></i>
+                        {% endif %}
                         <span class="fa fa-angle-down"></span>
                      </a>
                      <ul class="dropdown-menu" role="menu">
@@ -163,11 +160,17 @@
                         <li>
                             <a href="{{ url_for('user.notifications') }}">
                                 通知
+                                {% if notifications_count %}
+                                    <span class="notifications-count">{{ notifications_count }}</span>
+                                {% endif %}
                             </a>
                         </li>
                             <li>
                             <a href="{{ url_for('user.messages', uid=0, page=1)}}">
                                     私信
+                                {% if messages_count  %}
+                                    <span class="notifications-count">{{ messages_count }}</span>
+                                {% endif %}
                                 </a>
                             </li>
                         <li><a href="{{ url_for('feedback.add') }}">意见反馈</a></li>

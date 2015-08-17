@@ -133,3 +133,13 @@ input.search-input::-webkit-input-placeholder {
     background: url("/static/image/search@1x.png") no-repeat 95% 50% #ffffff;
     outline:none;
 }
+.W_new{
+  float: left;
+  margin: auto;
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 3px;
+  background: blue;
+  overflow: hidden;
+}
