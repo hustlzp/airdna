@@ -1335,7 +1335,7 @@
                   </div>
 
                   <div class="content">
-                    <a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/{{ piece.uid }}"> {{ piece.title }}</a>
+                    <a target="_blank" href="{% if piece.in_pmc %}/piece/ncbi/pmc/{{ piece.pmc_uid }}/{% else %}http://www.ncbi.nlm.nih.gov/{{ piece.db_name }}/{{ piece.uid }}{% endif %}"> {{ piece.title }}</a>
                   </div>
 
                   <div class="meta">
@@ -1353,6 +1353,14 @@
                         <a style="display:{% if not show_like and not (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none{% endif %};" href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
                           <img src="/static/image/like.png" title="收藏"></a>
                     </div>
+                    <div class="pull-right" style="margin-right:10px;">
+                        <a data-piece-id="{{ piece.uid }}" class="show-abstract">显示摘要</a>
+                    </div>
+                  </div>
+                  <div class="abstract" data-piece-id="{{ piece.uid }}" style="display:none;">
+                    {% if piece.abstract %}
+                      {{ piece.abstract | safe }}
+                    {% endif %}
                   </div>
                </div>
             </div>
@@ -1364,6 +1372,19 @@
 {% macro like_ncbi_piece_js() %}
 <script type="text/javascript">
 $(document).ready(function(){
+    //显示/隐藏摘要
+    $(".pieces-wap").delegate(".show-abstract", "click", function(e){
+        $(".abstract").hide();
+        var piece_id = $(e.target).data("piece-id");
+        $(".abstract[data-piece-id=" + piece_id + "]").show();
+        $(e.target).html("收起摘要").addClass("hide-abstract").removeClass("show-abstract");
+    });
+    $(".pieces-wap").delegate(".hide-abstract", "click", function(e){
+        $(".abstract").hide();
+        var piece_id = $(e.target).data("piece-id");
+        $(".abstract[data-piece-id=" + piece_id + "]").hide();
+        $(e.target).html("显示摘要").addClass("show-abstract").removeClass("hide-abstract");
+    });
     $(".pieces-wap").delegate(".meta .btn-add-collection", "click", function(e){
         
             var $e = $(e.currentTarget);

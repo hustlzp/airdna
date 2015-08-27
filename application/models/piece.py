@@ -284,9 +284,12 @@ class NCBIPiece(db.Model):
     uid = db.Column(db.Integer)
     db_name = db.Column(db.String(100))
     title = db.Column(db.Text)
+    abstract = db.Column(db.Text)
     author = db.Column(db.String(100))
     pub_date = db.Column(db.String(100))
     pub_journal = db.Column(db.String(100))
     pub_journal_page = db.Column(db.String(100))
+    in_pmc = db.Column(db.Boolean, default=False)
+    pmc_uid = db.Column(db.Integer)
 
     created_at = db.Column(db.DateTime, default=datetime.now)

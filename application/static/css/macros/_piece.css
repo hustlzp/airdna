@@ -510,6 +510,27 @@
   line-height: 1.6;
   font-size: 16px;
 }
+.pieces-wap .piece .abstract {
+  padding-right: 85px;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  font-size: 16px;
+  margin-top: 50px;
+}
+
+.pieces-wap .piece .abstract p{
+  text-indent: 20px;
+}
+@media (max-width: 767px) {
+  .pieces-wap .piece .abstract {
+    padding-right: 50px;
+  }
+}
+@media (max-width: 500px) {
+  .pieces-wap .piece .abstract {
+    padding-right: 0px;
+  }
+}
 @media (max-width: 767px) {
   .pieces-wap .piece .content {
     padding-right: 50px;
