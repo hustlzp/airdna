@@ -1335,7 +1335,7 @@
                   </div>
 
                   <div class="content">
-                    <a target="_blank" href="{% if piece.in_pmc %}/piece/ncbi/pmc/{{ piece.pmc_uid }}/{% else %}http://www.ncbi.nlm.nih.gov/{{ piece.db_name }}/{{ piece.uid }}{% endif %}"> {{ piece.title }}</a>
+                    <a target="_blank" href="{% if piece.in_pmc %}/piece/ncbi/pmc/{{ piece.pmc_uid }}{% else %}http://www.ncbi.nlm.nih.gov/{{ piece.db_name }}/{{ piece.uid }}{% endif %}"> {{ piece.title }}</a>
                   </div>
 
                   <div class="meta">
