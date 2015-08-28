@@ -451,10 +451,12 @@ def add_to_ncbicollection(dbname, uid):
         if data:
             data = data[0]
             piece = NCBIPiece(uid = uid, title = data["title"], \
-                    db_name = dbname, author = data["authors"],\
+                    db_name = dbname, author = data["author"],\
                     pub_date = data["pub_date"], pub_journal = data["pub_journal"],\
                     pub_journal_page = data["pub_journal"],\
-                    abstract = data["abstract"])
+                    abstract = data["abstract"],
+                    in_pmc = data.get('in_pmc', False),
+                    pmc_uid = data.get('pmc_uid', '0'))
             db.session.add(piece)
         else:
             abort(404)
@@ -468,7 +470,6 @@ def add_to_ncbicollection(dbname, uid):
         db.session.add(g.user)
         db.session.commit()
 
-    print g.user.ncbipieces_count, g.user.pieces_count
     return  json.dumps({"collection_id": collection_piece.id})
     
 

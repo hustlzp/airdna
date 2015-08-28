@@ -1342,19 +1342,29 @@
                     <div class="source-wap" style="float:left">
                         <span class="source">{{ piece.author }} | {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
                     </div>
-                    <div class="bshare-custom pull-right" style="">
+                    <div class="bshare-custom pull-right hidden" style="">
                       <div class="bsPromo bsPromo2"></div>
                       <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);" style="background-image:url('/static/image/share_weixin.png');background-size:16px 16px;"></a>
                       <a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"  style="background-image:url('/static/image/share_weibo.png');background-size:16px 16px;background-position:0 0;"></a>
                     </div>
                     <div class="pull-right" style="float:left;margin-right:10px;">
                       <a style="display:{% if show_like or (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none;{% endif %}" href="javascript: void(0)" class="btn-remove-collection" data-collection_id='{{collection.id}}' data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                                  <img src="/static/image/unlike.png" title="取消收藏"></a>
+                                  <!--<img src="/static/image/unlike.png" title="取消收藏">-->
+                                取消收藏</a>
                         <a style="display:{% if not show_like and not (g.user and g.user.is_ncbi_collections(piece.db_name, piece.uid)) %}block{% else %}none{% endif %};" href="javascript: void(0)" class="btn-add-collection" data-dbname='{{ piece.db_name }}' data-uid='{{ piece.uid }}'>
-                          <img src="/static/image/like.png" title="收藏"></a>
+                          <!--<img src="/static/image/like.png" title="收藏">-->
+                          收藏
+                        </a>
+
                     </div>
                     <div class="pull-right" style="margin-right:10px;">
-                        <a data-piece-id="{{ piece.uid }}" class="show-abstract">显示摘要</a>
+                        {% if piece.in_pmc %}
+                        <a style="margin-right:10px;" href="/piece/ncbi/pmc/{{ piece.pmc_uid}}" target="_blank">
+                          阅读
+                          <!--<img src="/static/image/reader.png" title="阅读" class="icon-20">-->
+                        </a>
+                        {% endif %}
+                        <a data-piece-id="{{ piece.uid }}" class="show-abstract">摘要</a>
                     </div>
                   </div>
                   <div class="abstract" data-piece-id="{{ piece.uid }}" style="display:none;">
@@ -1377,13 +1387,13 @@ $(document).ready(function(){
         $(".abstract").hide();
         var piece_id = $(e.target).data("piece-id");
         $(".abstract[data-piece-id=" + piece_id + "]").show();
-        $(e.target).html("收起摘要").addClass("hide-abstract").removeClass("show-abstract");
+        $(e.target).html("收起").addClass("hide-abstract").removeClass("show-abstract");
     });
     $(".pieces-wap").delegate(".hide-abstract", "click", function(e){
         $(".abstract").hide();
         var piece_id = $(e.target).data("piece-id");
         $(".abstract[data-piece-id=" + piece_id + "]").hide();
-        $(e.target).html("显示摘要").addClass("show-abstract").removeClass("hide-abstract");
+        $(e.target).html("摘要").addClass("show-abstract").removeClass("hide-abstract");
     });
     $(".pieces-wap").delegate(".meta .btn-add-collection", "click", function(e){
         
