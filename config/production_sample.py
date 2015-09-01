@@ -19,3 +19,9 @@ class ProductionConfig(Config):
 
     # Sentry
     SENTRY_DSN = ''
+
+    #CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+    #CELERY_RESULT_BACKEND='redis://localhost:6379'
+    CELERY_RESULT_BACKEND='amqp://guest:guest@localhost:5672//'
+
