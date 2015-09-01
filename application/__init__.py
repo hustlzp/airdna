@@ -9,6 +9,7 @@ if project_path not in sys.path:
 
 import hashlib
 import time
+from celery import Celery
 from flask import Flask, request, url_for, g, render_template
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
@@ -62,6 +63,7 @@ def create_app():
     register_error_handle(app)
     register_uploadsets(app)
     register_hooks(app)
+    make_celery(app)
 
     return app
 
@@ -174,6 +176,23 @@ def register_hooks(app):
             delta = time.time() - g._before_request_time
             response.headers['X-Render-Time'] = delta * 1000
         return response
+
+
+def make_celery(app = None):
+    #from .utils import tasks
+    from application import create_app
+    app = app or create_app()
+    celery = Celery(app.import_name, broker= app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    #tasks.celery = celery
+    return celery
 
 
 def _get_template_name(template_reference):
