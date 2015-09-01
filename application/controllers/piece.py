@@ -13,6 +13,10 @@ from flask import render_template, Blueprint, redirect, request, url_for, g, \
 from ..utils.permissions import UserPermission, PieceAddPermission, PieceEditPermission
 from ..utils.helpers import generate_lcs_html
 from ..utils.ncbi import NCBISummary, NCBIFetch
+from ..utils import cache
+
+from ..utils.tasks import download_pdf_from_ncbi
+
 from ..models import db, User, Piece, PieceVote, PieceComment, CollectionPiece, Collection, \
     PieceSource, PieceAuthor, PIECE_EDIT_KIND, PieceEditLog, PieceCommentVote, Notification, \
     NOTIFICATION_KIND, PieceEditLogReport, CollectionEditLog, COLLECTION_EDIT_KIND,\
@@ -34,45 +38,22 @@ def view(uid):
 @bp.route('/piece/ncbi/<string:dbname>/<int:uid>')
 def ncbi_piece_view(dbname, uid):
     """Single piece page"""
-    url = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC{0}/".format(uid)
+
+    if request.headers["Accept"].find('application/json') == -1:
+        return render_template("piece/ncbipdf.html")
+
     path = 'uploads/ncbi/{0}/{1}/'.format(dbname, uid)
-    if not os.path.exists(path):
-        os.makedirs(path)
     html_path = "{0}{1}".format(path, '1.html')
-    pdf_path = "{0}{1}".format(path, '1.pdf')
+    cache_key = 'ncbi_{0}_{1}_pdf'.format(dbname, uid)
+    result = {'url': ''}
     if os.path.exists(html_path):
-        return open(html_path).read()
-    if not os.path.exists(pdf_path):
-        s = requests.session()
-        html = s.get(url).content
-        try:
-            url = re.findall(r'<link\s*rel=\"alternate\"\s*type=\"application/pdf\".*href=\"(?P<url>.+?)\".*/>', html)[0]
-            if not url.startswith("http"):
-                url = "http://www.ncbi.nlm.nih.gov" + url
-            print url
-            pdf = s.get(url).content
-            print 'get pdf success'
-            f = open(pdf_path, 'w')
-            f.write(pdf)
-            f.close()
-        except Exception, e:
-            print str(e)
-            return html
-    else:
-        pdf = open(pdf_path).read()
-
-    temp = TemporaryFile()
-    temp.seek(0)
-    temp.write(pdf)
-    temp.seek(0)
-    res = TemporaryFile()
-    p = subprocess.Popen(['pdf2htmlEX', '/dev/stdin', html_path], stdin = temp ,stdout = res, stderr = subprocess.PIPE, shell = False)
-    p.wait()
-    print p.stderr.read()
-    res.seek(0)
-    message = open(html_path).read()
-    return message
-
+        result['url'] = '/uploads/ncbi/{0}/{1}/1.html'.format(dbname, uid)
+    elif not cache.cache.get(cache_key):
+        cache.cache.set(cache_key, True)
+        print "download_pdf_from_ncbi"
+        download_pdf_from_ncbi.delay(dbname, uid)
+    
+    return json.dumps(result)
     
 
 @bp.route('/json', methods=['POST'])

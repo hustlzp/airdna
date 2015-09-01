@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block page_title %}AirDNA{% endblock %}
+{% block page_content %}
+<p>文件下载中...............</p>
+<iframe src=""></iframe>
+<script type="text/javascript">
+function get_url(){
+  $.getJSON('', function(data, status, response){
+      if(data.url){
+        $.get(data.url, function(data, status, response){
+              document.write(data);
+          });
+      }
+      else{
+        setTimeout(get_url, 10*1000);
+      }
+    })
+}
+$(document).ready(function(){
+  get_url();    
+});
+</script>
+{% endblock %}
