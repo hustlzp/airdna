@@ -9,6 +9,7 @@
 function get_url(){
   $.getJSON('', function(data, status, response){
       if(data.url){
+      window.location.href = data.url;
         $.get(data.url, function(data, status, response){
               document.write(data);
           });
