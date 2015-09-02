@@ -2,7 +2,9 @@
 {% block page_title %}AirDNA{% endblock %}
 {% block page_content %}
 <div class="center-block" style="text-align:center;">
-    <p style="font-size: 30px;font-family: 'Microsoft YaHei';">文件下载中..........</p>
+    <div style="font-size: 30px;font-family: 'Microsoft YaHei';">
+        文件下载中.....<span class="timer_numbers" id="timer_numbers">00:00:00</span>
+    </div>
     <img src="{{ static('image/animal.loading.gif') }}" alt=""/>
 </div>
 <script type="text/javascript">
@@ -22,5 +24,25 @@ function get_url(){
 $(document).ready(function(){
   get_url();    
 });
+</script>
+
+<script type="text/javascript">
+var c = 0;
+var t;
+function timedCount()
+{
+   var temptextmin=document.getElementById('timer_numbers');
+	hour = parseInt(c / 3600);// 小时数
+	min = parseInt(c / 60);// 分钟数
+	if(min>=60){
+	    min=min%60
+	}
+	lastsecs = c % 60;
+    temptextmin.innerHTML= min + "分" + lastsecs + "秒";
+    c=c+1;
+    t=setTimeout("timedCount()",1000);
+}
+
+timedCount();
 </script>
 {% endblock %}

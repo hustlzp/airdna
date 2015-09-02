@@ -828,3 +828,26 @@
   width:20px;
   height:20px;
 }
+.timer-numbers-block {
+  width: 144px;
+  height: 27px;
+  float: left;
+  font-size: 13px;
+  padding-left: 15px;
+  padding-top: 13px;
+  color: #666;
+}
+.timer_number_titles {
+  color: #666666;
+  font-size: 9px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.timer_numbers {
+  font-weight: 300;
+  font-size: 32px;
+  color: #666666;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-family: "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+}
