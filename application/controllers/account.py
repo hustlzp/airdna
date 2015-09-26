@@ -76,7 +76,7 @@ def activate():
     if not user_id:
         return render_template('site/message.html', title="账号激活失败", message='无效的激活链接')
 
-    user = User.query.filter(User.id == user_id).first()
+    user = User.query.filter(User.id==user_id, User.is_active==False).first()
     if not user:
         return render_template('site/message.html', title="账号激活失败", message='无效的账号')
 

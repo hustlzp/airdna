@@ -68,7 +68,7 @@ def send_mail(to, subject, html):
         if result['message'] == 'success':
             return True
         else:
-            log = MailLog(email=to, message=result['errors'].join('; '))
+            log = MailLog(email=to, message='; '.join(result['errors']))
             db.session.add(log)
             db.session.commit()
             print(log.message)
