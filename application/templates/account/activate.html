@@ -1,20 +1,20 @@
 {% extends "layout.html" %}
-{% from 'macros/_form.html' import vertical_field, form_submit %}
+{% from 'macros/_form.html' import vertical_field, form_submit, hidden_field %}
 
-{% block page_title %}注册 - AirDNA{% endblock %}
+{% block page_title %}完成注册 - AirDNA{% endblock %}
 {% block page_content %}
    <div class="container">
       <div class="panel panel-primary">
-         <div class="panel-heading">注册</div>
+         <div class="panel-heading">完成注册</div>
          <div class="panel-body">
-            <form method="post" action="{{ url_for('account.signup') }}">
+            <form method="post">
                {{ form.csrf_token() }}
 
-               {#               {{ vertical_field(form.code) }}#}
-               {#               {{ vertical_field(form.name) }}#}
-               {{ vertical_field(form.email) }}
-               {#               {{ vertical_field(form.password) }}
-                                {{ vertical_field(form.repassword) }}#}
+               {{ vertical_field(form.name) }}
+               {{ vertical_field(form.school) }}
+               {{ vertical_field(form.research_areas) }}
+               {{ vertical_field(form.password) }}
+               {{ vertical_field(form.repassword) }}
 
                <div class="submit-wap submit-right">
                   <button type="submit" class="btn btn-submit btn-primary">注册</button>

@@ -19,7 +19,7 @@ def send_invitation_mail(to, invitation_code):
 
 def send_activate_mail(user):
     """发送激活链接到用户邮箱"""
-    url = absolute_url_for('account.activate', token=encode(user.id))
+    url = absolute_url_for('account.activate', token=encode(user.email))
     return send_mail(user.email,
                      "账号激活",
                      render_template('mail/activate.html', url=url))

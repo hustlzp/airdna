@@ -1,6 +1,7 @@
 # coding: utf-8
 from flask import render_template, Blueprint, redirect, request, url_for, flash
 from ..forms import SigninForm, SignupForm, ResetPasswordForm, ForgotPasswordForm
+from ..forms import ActivateForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission
 from ..utils.mail import send_activate_mail, send_reset_password_mail
@@ -36,7 +37,7 @@ def signup():
     #         form.email.data = code.email
 
     if form.validate_on_submit():
-        user = User(name=form.name.data, email=form.email.data, password=form.password.data)
+        user = User(email=form.email.data)
         db.session.add(user)
         db.session.commit()
 
@@ -65,22 +66,31 @@ def signup():
     return render_template('account/signup.html', form=form)
 
 
-@bp.route('/activate')
+@bp.route('/activate', methods=['GET', 'POST'])
 def activate():
     """激活账号"""
     token = request.args.get('token')
     if not token:
         return render_template('site/message.html', title="账号激活失败", message='无效的激活链接')
 
-    user_id = decode(token)
-    if not user_id:
+    user_email = decode(token)
+    if not user_email:
         return render_template('site/message.html', title="账号激活失败", message='无效的激活链接')
 
-    user = User.query.filter(User.id==user_id, User.is_active==False).first()
+    user = User.query.filter(User.email==user_email, User.is_active==False).first()
     if not user:
         return render_template('site/message.html', title="账号激活失败", message='无效的账号')
 
+    form = ActivateForm()
+    if not form.validate_on_submit():
+        return render_template('account/activate.html', form=form)
+
     user.is_active = True
+    user.name = form.name.data
+    user.password = form.password.data
+    user.school = form.school.data
+    user.research_areas = form.research_areas.data
+
     db.session.add(user)
     db.session.commit()
     signin_user(user)

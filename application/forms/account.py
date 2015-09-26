@@ -34,32 +34,15 @@ class SigninForm(Form):
 
 
 class SignupForm(Form):
-    """Form for signin"""
+    """Form for signup"""
     # code = StringField('邀请码',
     #                    validators=[DataRequired('邀请码不能为空')])
-
-    name = StringField('用户名',
-                       validators=[DataRequired('用户名不能为空')])
 
     email = StringField('邮箱',
                         validators=[
                             DataRequired(message="邮箱不能为空"),
                             Email(message="无效的邮箱")
                         ])
-
-    password = PasswordField('密码',
-                             validators=[DataRequired('密码不能为空')])
-
-    repassword = PasswordField('确认密码',
-                               validators=[
-                                   DataRequired('再次确认你的密码'),
-                                   EqualTo('password', message='两次输入密码不一致')
-                               ])
-
-    def validate_name(self, field):
-        user = User.query.filter(User.name == self.name.data).first()
-        if user:
-            raise ValueError('用户名已存在')
 
     def validate_email(self, field):
         user = User.query.filter(User.email == self.email.data).first()
@@ -93,3 +76,25 @@ class ResetPasswordForm(Form):
                                     validators=[
                                         DataRequired('请再输入一次新密码'),
                                         EqualTo('new_password', message='两次输入密码不一致')])
+
+
+class ActivateForm(Form):
+    """Form for activate"""
+    name = StringField('用户名',
+                       validators=[DataRequired('用户名不能为空')])
+    school = StringField('研究机构',
+                         validators=[DataRequired('研究机构不能为空')])
+    research_areas = StringField('研究领域',
+                                 validators=[DataRequired('研究领域不能为空')])
+    password = PasswordField('密码',
+                             validators=[DataRequired('密码不能为空')])
+    repassword = PasswordField('确认密码',
+                               validators=[
+                                   DataRequired('再次确认你的密码'),
+                                   EqualTo('password', message='两次输入密码不一致')
+                               ])
+
+    def validate_name(self, field):
+        user = User.query.filter(User.name == self.name.data).first()
+        if user:
+            raise ValueError('用户名已存在')
