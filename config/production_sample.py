@@ -25,3 +25,8 @@ class ProductionConfig(Config):
     #CELERY_RESULT_BACKEND='redis://localhost:6379'
     CELERY_RESULT_BACKEND='amqp://guest:guest@localhost:5672//'
 
+    MAIL_ACCOUNT = ''
+    MAIL_PASSWORD = ''
+    MAIL_SMTP = 'smtp.qq.com'
+    MAIL_SMTP_PORT = 25
+    MAIL_FROM = 'AirDNA'

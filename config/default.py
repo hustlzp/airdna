@@ -41,3 +41,9 @@ class Config(object):
 
     # Host string, used by fabric
     HOST_STRING = ""
+
+    MAIL_ACCOUNT = ''
+    MAIL_PASSWORD = ''
+    MAIL_SMTP = 'smtp.qq.com'
+    MAIL_SMTP_PORT = 25
+    MAIL_FROM = 'AirDNA'
