@@ -7,6 +7,10 @@ from .helpers import absolute_url_for
 from .security import encode
 from ..models import db, MailLog
 
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
+
 
 def send_invitation_mail(to, invitation_code):
     """发送内测邀请码到用户邮箱"""
@@ -34,6 +38,29 @@ def send_reset_password_mail(user):
 
 
 def send_mail(to, subject, html):
+    """通用的邮件发送函数，返回成功与否"""
+    config = current_app.config
+
+    msg = MIMEText(html, 'html', 'utf-8')
+    msg['Subject'] = subject
+    msg['From'] = config['MAIL_FROM']
+    msg['to'] = to
+
+    try:
+        server = smtplib.SMTP(config['MAIL_SMTP'], config['MAIL_SMTP_PORT'])
+        server.login(config['MAIL_ACCOUNT'], config['MAIL_PASSWORD'])
+        server.sendmail(config['MAIL_ACCOUNT'], [to], msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        log = MailLog(email=to, message=traceback.format_exc())
+        db.session.add(log)
+        db.session.commit()
+        print(log.message)
+        return False
+
+
+def send_mail_by_sendcloud(to, subject, html):
     """通用的邮件发送函数，返回成功与否"""
     config = current_app.config
     url = "http://sendcloud.sohu.com/webapi/mail.send.json"
