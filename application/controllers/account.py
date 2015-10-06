@@ -1,12 +1,13 @@
 # coding: utf-8
 from flask import render_template, Blueprint, redirect, request, url_for, flash
 from ..forms import SigninForm, SignupForm, ResetPasswordForm, ForgotPasswordForm
-from ..forms import ActivateForm
+from ..forms import ActivateForm, EmailPromtForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission
 from ..utils.mail import send_activate_mail, send_reset_password_mail
 from ..utils.security import decode
 from ..utils.helpers import get_domain_from_email
+from ..utils.get_mail_contact import get_contact
 from ..models import db, User, InvitationCode
 
 bp = Blueprint('account', __name__)
@@ -149,3 +150,21 @@ def reset_password():
         flash('密码重置成功，请使用新密码登录账户')
         return redirect(url_for('.signin'))
     return render_template('account/reset_password.html', form=form)
+
+
+@bp.route('/email_promt', methods=['GET', 'POST'])
+def email_promt():
+    form = EmailPromtForm()
+    contacts = {}
+    if form.validate_on_submit():
+        try:
+            contacts = dict(get_contact(form.host.data, form.email.data, form.password.data))
+        except Exception as e:
+            flash('获取通讯录失败, 请重试. {}'.format(str(e).decode('gbk')))
+    return render_template('account/email_promt.html', form=form, contacts=contacts)
+
+
+@bp.route('/email_invite', methods=['GET', 'POST'])
+def email_invite():
+    flash("邮件已发送. 换一个邮箱再来一次")
+    return redirect(url_for('account.email_promt'))

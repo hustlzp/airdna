@@ -98,3 +98,16 @@ class ActivateForm(Form):
         user = User.query.filter(User.name == self.name.data).first()
         if user:
             raise ValueError('用户名已存在')
+
+
+class EmailPromtForm(Form):
+    email = StringField('邮箱',
+                        validators=[
+                            DataRequired(message="邮箱不能为空"),
+                            Email(message="无效的邮箱")
+                        ])
+    password = PasswordField('密码',
+                             validators=[DataRequired('密码不能为空')])
+
+    host = StringField('POP3 服务器',
+                             validators=[DataRequired('POP3 不能为空')])

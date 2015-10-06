@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% from 'macros/_form.html' import vertical_field, form_submit %}
+
+{% block page_title %}邀请好友 - AirDNA{% endblock %}
+{% block page_content %}
+   <div class="container">
+
+      <div class="panel panel-primary">
+         <div class="panel-heading">输入邮箱, 立即寻找人脉</div>
+         <div class="panel-body">
+            <form method="post">
+               {{ form.csrf_token() }}
+
+               {{ vertical_field(form.email) }}
+               {{ vertical_field(form.password) }}
+               {{ vertical_field(form.host) }}
+
+               <div class="submit-wap submit-right">
+                  <button type="submit" class="btn btn-submit btn-primary">继续</button>
+               </div>
+            </form>
+         </div>
+      </div>
+
+      {% if contacts %}
+
+      <div class="panel panel-primary">
+         <div class="panel-heading">选择好友</div>
+         <div class="panel-body">
+            <form method="post" action="{{ url_for('account.email_invite') }}">
+            {{ form.csrf_token() }}
+            {% for email, name in contacts.items() %}
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="">
+                    {{ name }} <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{ email }}
+                  </label>
+                </div>
+             {% endfor %}
+               <div class="submit-wap submit-right">
+                  <button type="submit" class="btn btn-submit btn-primary">发送邮件</button>
+               </div>
+            </form>
+         </div>
+      </div>
+
+      {% endif %}
+
+   </div>
+{% endblock %}
+
