@@ -13,7 +13,17 @@
 
                {{ vertical_field(form.email) }}
                {{ vertical_field(form.password) }}
+                <p class="text-warning">
+                qq: 需要设置独立密码, 此处使用独立密码.<br/>
+                163: 开启, 并使用客户端授权密码.
+                </p>
+
                {{ vertical_field(form.host) }}
+
+                <p class="text-warning">
+                qq: pop.qq.com<br/>
+                163: pop.163.com
+                </p>
 
                <div class="submit-wap submit-right">
                   <button type="submit" class="btn btn-submit btn-primary">继续</button>
@@ -21,6 +31,7 @@
             </form>
          </div>
       </div>
+
 
       {% if contacts %}
 
