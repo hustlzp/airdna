@@ -148,3 +148,13 @@ input.search-input::-webkit-input-placeholder {
   margin-left:5px;
   float:right;
 }
+.left_container{
+  float:left;
+  width:75%;
+}
+@media (min-width:992px){
+  
+  .left_container{
+    float:left;
+  }
+}
