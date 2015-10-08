@@ -1,11 +1,13 @@
 # coding: utf-8
 from flask import render_template, Blueprint, redirect, request, url_for, flash
 from ..forms import SigninForm, SignupForm, ResetPasswordForm, ForgotPasswordForm
+from ..forms import ActivateForm, EmailPromtForm
 from ..utils.account import signin_user, signout_user
 from ..utils.permissions import VisitorPermission
 from ..utils.mail import send_activate_mail, send_reset_password_mail
 from ..utils.security import decode
 from ..utils.helpers import get_domain_from_email
+from ..utils.get_mail_contact import get_contact
 from ..models import db, User, InvitationCode
 
 bp = Blueprint('account', __name__)
@@ -36,7 +38,7 @@ def signup():
     #         form.email.data = code.email
 
     if form.validate_on_submit():
-        user = User(name=form.name.data, email=form.email.data, password=form.password.data)
+        user = User(email=form.email.data)
         db.session.add(user)
         db.session.commit()
 
@@ -65,22 +67,31 @@ def signup():
     return render_template('account/signup.html', form=form)
 
 
-@bp.route('/activate')
+@bp.route('/activate', methods=['GET', 'POST'])
 def activate():
     """激活账号"""
     token = request.args.get('token')
     if not token:
         return render_template('site/message.html', title="账号激活失败", message='无效的激活链接')
 
-    user_id = decode(token)
-    if not user_id:
+    user_email = decode(token)
+    if not user_email:
         return render_template('site/message.html', title="账号激活失败", message='无效的激活链接')
 
-    user = User.query.filter(User.id == user_id).first()
+    user = User.query.filter(User.email==user_email, User.is_active==False).first()
     if not user:
         return render_template('site/message.html', title="账号激活失败", message='无效的账号')
 
+    form = ActivateForm()
+    if not form.validate_on_submit():
+        return render_template('account/activate.html', form=form)
+
     user.is_active = True
+    user.name = form.name.data
+    user.password = form.password.data
+    user.school = form.school.data
+    user.research_areas = form.research_areas.data
+
     db.session.add(user)
     db.session.commit()
     signin_user(user)
@@ -139,3 +150,21 @@ def reset_password():
         flash('密码重置成功，请使用新密码登录账户')
         return redirect(url_for('.signin'))
     return render_template('account/reset_password.html', form=form)
+
+
+@bp.route('/email_promt', methods=['GET', 'POST'])
+def email_promt():
+    form = EmailPromtForm()
+    contacts = {}
+    if form.validate_on_submit():
+        try:
+            contacts = dict(get_contact(form.host.data, form.email.data, form.password.data))
+        except Exception as e:
+            flash('获取通讯录失败, 请重试. {}'.format(str(e).decode('gbk')))
+    return render_template('account/email_promt.html', form=form, contacts=contacts)
+
+
+@bp.route('/email_invite', methods=['GET', 'POST'])
+def email_invite():
+    flash("邮件已发送. 换一个邮箱再来一次")
+    return redirect(url_for('account.email_promt'))
