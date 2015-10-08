@@ -1,13 +1,17 @@
 # coding: utf-8
 
 
-import json
-from urllib import urlencode
-from urllib2 import urlopen
+#import json
+#from urllib import urlencode
+#from urllib2 import urlopen
 
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, g
 from flask.ext.sqlalchemy import Pagination
 from ..utils.ncbi import NCBISearch, NCBIFetch
+from ..utils import cache
+from ..utils.cache import CACHE_USER_SEARCH_DICT, CACHE_KEYS_ALL, CACHE_KEY_USER,\
+        CACHE_USER_SEARCH_LIST
+
 
 bp = Blueprint('search', __name__)
 
@@ -33,19 +37,7 @@ def handle(**kwargs):
         result["retstart"] = int(data["esearchresult"]["retstart"])
         result["retmax"] = 10
         ulist = ",".join(data["esearchresult"]["idlist"])
-        #data = urlopen(SUMMARY_URL, urlencode({"db": kwargs.get("db", "pubmed"), "id": ulist, 'retmode': 'json'})).read()
         result["data"] = NCBIFetch(**{"db": kwargs.get("db", "pmc"), "id": ulist})
-        #for x in data["result"]["uids"]:
-            #x = data["result"][x]
-            #result["data"].append({
-                #"uid": x["uid"],
-                #"pub_date": x["epubdate"],
-                #"author": x["authors"][0]["name"],
-                #"title": x["title"],
-                #"pub_journal": x["fulljournalname"],
-                #"pub_page": x["elocationid"],
-                #'db_name': kwargs.get("db", "pubmed"),
-                #})
     except:
         pass
     return Pagination(None, int(kwargs.get("page", 0)), 10, result["totalCount"], result["data"])
@@ -62,4 +54,15 @@ def search():
             'page': request.args.get("page", 1),
             }
     data = handle(**search_args)
+    if g.user:
+        mc = cache.cache
+        term = search_args["term"]
+        mc.sadd(CACHE_KEYS_ALL, term)
+        mc.sadd(CACHE_KEY_USER.format(key = term), g.user.id)
+        mc.hset(CACHE_USER_SEARCH_LIST.format(user = g.user.id), term, 0)
+
+        if int(search_args["page"]) == 1:
+            uid = [x["uid"] for x in data.items]
+            mc.hset(CACHE_USER_SEARCH_DICT.format(user = g.user.id), term, set(uid))
+
     return render_template("site/searchNCBI.html", data = data)

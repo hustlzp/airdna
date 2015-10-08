@@ -75,6 +75,7 @@ def create_cache(app):
 def register_jinja(app):
     """Register jinja filters, vars, functions."""
     from .utils import filters, permissions, helpers
+    from .utils.cache import CACHE_USER_SEARCH_LIST
     from .models import Notification, NOTIFICATION_KIND, PIECE_EDIT_KIND, COLLECTION_EDIT_KIND
     from .models import Message
 
@@ -85,11 +86,14 @@ def register_jinja(app):
 
     @app.context_processor
     def inject_vars():
+        from .utils import cache
         return dict(
             notifications_count=g.user.notifications.filter(
                 ~Notification.checked).count() if g.user else 0,
             messages_count = g.user.messages.filter(
                 ~Message.checked).count() if g.user else 0,
+            search_dict = cache.cache.hgetall(CACHE_USER_SEARCH_LIST.format(
+                user = g.user.id)) if g.user else {}
         )
 
     def url_for_other_page(page):

@@ -1341,6 +1341,7 @@
                   <div class="meta">
                     <div class="source-wap" style="float:left">
                         <span class="source">{{ piece.author }} | {{ piece.pub_date }}发表于{{ piece.pub_journal }}</span>
+                        <span style="color:red">{% if piece.isNew %}{{ piece.isNew }}{% endif %}</span>
                     </div>
                     <div class="bshare-custom pull-right hidden" style="">
                       <div class="bsPromo bsPromo2"></div>

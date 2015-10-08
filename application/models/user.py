@@ -74,7 +74,7 @@ class User(db.Model):
     @online.setter
     def online(self, value):
         
-        return cache.cache.set("user_online_{}".format(self.id), value, timeout = 60)
+        return cache.cache.set("user_online_{}".format(self.id), value, ex = 60)
 
 
     def __repr__(self):

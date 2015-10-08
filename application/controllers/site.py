@@ -1,7 +1,10 @@
 # coding: utf-8
 from datetime import date, timedelta
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, g
 from ..models import Piece, Collection, CollectionKind
+
+from ..utils import cache
+mc = cache.cache
 
 bp = Blueprint('site', __name__)
 

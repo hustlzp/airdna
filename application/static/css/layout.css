@@ -143,3 +143,8 @@ input.search-input::-webkit-input-placeholder {
   background: blue;
   overflow: hidden;
 }
+.item_node .W_new{
+  background:red;
+  margin-left:5px;
+  float:right;
+}

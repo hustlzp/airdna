@@ -8,7 +8,7 @@
    </script>
 {% endblock %}`
 {% block page_content %}
-   <div class="container">
+<div class="container {% if search_dict %}pull-left{% endif %}">
       {#      {{ render_pieces_by_date(pieces, page, pre_page, next_page) }}#}
 
       <div class="pieces-container">
@@ -20,6 +20,15 @@
          正在加载
       </div>
    </div>
+   {% if search_dict %}
+        <div class="inner">
+        {% for key, value in search_dict.iteritems() %}
+        <div>
+            <a href="/search/?query={{ key }}" class="item_node">{% if value != "0" %}<i class="W_new"></i>{% endif %}{{ key }}</a>
+        </div>
+        {% endfor %}
+        </div>
+   {% endif %}
 
 <div id="favicon-wx-share">
     <div>
