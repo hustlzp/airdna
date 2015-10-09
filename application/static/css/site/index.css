@@ -22,6 +22,7 @@
 .inner{
   float: left;
   width: 200px;
+  margin-left:20px;
 }
 .item_node{
   font-size: 12px;
@@ -31,4 +32,5 @@
   border-radius: 16px;
   display: inline-block;
   border: 1px solid #e5e5e5;
+  word-break: break-all;
 }
