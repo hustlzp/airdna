@@ -150,11 +150,12 @@ input.search-input::-webkit-input-placeholder {
 }
 .left_container{
   float:left;
-  width:75%;
+  margin-left:200px;
 }
 @media (min-width:992px){
   
   .left_container{
     float:left;
+    margin-left:200px;
   }
 }
